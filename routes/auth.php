@@ -5,7 +5,14 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
-    if (\App\Models\AdminSetting::get('enable_registration', true)) {
+    $enableRegistration = true;
+    try {
+        $enableRegistration = \App\Models\AdminSetting::get('enable_registration', true);
+    } catch (\Exception $e) {
+        // Table doesn't exist yet (before migrations)
+    }
+
+    if ($enableRegistration) {
         Volt::route('register', 'pages.auth.register')
             ->name('register');
     }
