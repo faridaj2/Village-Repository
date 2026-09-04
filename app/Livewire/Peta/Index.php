@@ -44,8 +44,7 @@ class Index extends Component
             : [];
 
         $rumahQuery = Rumah::with('rt.rw')
-            ->whereNotNull('latitude')
-            ->whereNotNull('longitude');
+            ->whereNotNull('posisi');
 
         if ($this->filterRw) {
             $rumahQuery->whereHas('rt', fn ($q) => $q->where('rw_id', $this->filterRw));
@@ -59,8 +58,8 @@ class Index extends Component
 
         $this->rumahs = $rumahQuery->get()->map(fn ($r) => [
             'id' => $r->id,
-            'lat' => (float) $r->latitude,
-            'lng' => (float) $r->longitude,
+            'lat' => $r->latitude,
+            'lng' => $r->longitude,
             'kode' => $r->kode_rumah ?? '-',
             'alamat' => $r->alamat ?? '-',
             'rt' => $r->rt?->nama ?? '-',
@@ -69,8 +68,7 @@ class Index extends Component
         ])->toArray();
 
         $fasilitasQuery = FasilitasUmum::with('rt.rw')
-            ->whereNotNull('latitude')
-            ->whereNotNull('longitude');
+            ->whereNotNull('posisi');
 
         if ($this->filterRw) {
             $fasilitasQuery->whereHas('rt', fn ($q) => $q->where('rw_id', $this->filterRw));
@@ -81,8 +79,8 @@ class Index extends Component
 
         $this->fasilitas = $fasilitasQuery->get()->map(fn ($f) => [
             'id' => $f->id,
-            'lat' => (float) $f->latitude,
-            'lng' => (float) $f->longitude,
+            'lat' => $f->latitude,
+            'lng' => $f->longitude,
             'nama' => $f->nama,
             'jenis' => $f->jenis,
         ])->toArray();

@@ -13,8 +13,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jenis');
             $table->foreignId('dusun_id')->nullable()->constrained('dusuns')->nullOnDelete();
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('posisi')->nullable();
             $table->string('foto')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();

@@ -14,18 +14,28 @@ class FasilitasUmum extends Model
         'nama',
         'jenis',
         'rt_id',
-        'latitude',
-        'longitude',
+        'posisi',
         'foto',
         'keterangan',
     ];
 
     protected function casts(): array
     {
-        return [
-            'latitude' => 'decimal:7',
-            'longitude' => 'decimal:7',
-        ];
+        return [];
+    }
+
+    public function getLatitudeAttribute(): ?float
+    {
+        if (!$this->posisi) return null;
+        $parts = explode(',', $this->posisi);
+        return count($parts) === 2 ? (float) trim($parts[0]) : null;
+    }
+
+    public function getLongitudeAttribute(): ?float
+    {
+        if (!$this->posisi) return null;
+        $parts = explode(',', $this->posisi);
+        return count($parts) === 2 ? (float) trim($parts[1]) : null;
     }
 
     public function rt(): BelongsTo

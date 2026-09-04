@@ -61,14 +61,9 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Latitude</label>
-                        <input wire:model="latitude" type="text" placeholder="-3.4103139" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
-                        @error('latitude') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Longitude</label>
-                        <input wire:model="longitude" type="text" placeholder="126.9683868" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
-                        @error('longitude') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Posisi</label>
+                        <input wire:model="posisi" type="text" placeholder="-3.4103139, 126.9683868" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                        @error('posisi') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div class="sm:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">Keterangan</label>
@@ -115,8 +110,8 @@
                             </td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">{{ $f->rt?->rw?->nama ?? '-' }} / {{ $f->rt?->nama ?? '-' }}</td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">
-                                @if ($f->latitude && $f->longitude)
-                                    <span class="font-mono text-xs">{{ $f->latitude }}, {{ $f->longitude }}</span>
+                                @if ($f->posisi)
+                                    <span class="font-mono text-xs">{{ $f->posisi }}</span>
                                 @else
                                     <span class="text-gray-400">Belum ada</span>
                                 @endif

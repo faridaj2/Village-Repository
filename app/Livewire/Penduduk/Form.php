@@ -69,8 +69,7 @@ class Form extends Component
     public $selectedRtForm = '';
 
     // Koordinat (opsional)
-    public $latitude = '';
-    public $longitude = '';
+    public $posisi = '';
 
     // Rumah fields (opsional, langsung ke penduduk)
     public $hasRumah = false;
@@ -126,8 +125,7 @@ class Form extends Component
                 $this->kategoriRumah = $rumah->kategori_rumah ?? '';
                 $this->teraliriListrik = $rumah->teraliri_listrik ?? false;
                 $this->punyaMckRumah = $rumah->punya_mck ?? false;
-                $this->latitude = $rumah->latitude ?? '';
-                $this->longitude = $rumah->longitude ?? '';
+                $this->posisi = $rumah->posisi ?? '';
             }
         }
     }
@@ -236,8 +234,7 @@ class Form extends Component
             $rumah = Rumah::create([
                 'rt_id' => $this->selectedRtForm,
                 'alamat' => null,
-                'latitude' => $this->latitude ?: null,
-                'longitude' => $this->longitude ?: null,
+                'posisi' => $this->posisi ?: null,
             ]);
 
             $kk = KartuKeluarga::create([
@@ -273,8 +270,7 @@ class Form extends Component
                 'kategori_rumah' => $this->kategoriRumah ?: null,
                 'teraliri_listrik' => $this->teraliriListrik,
                 'punya_mck' => $this->punyaMckRumah,
-                'latitude' => $this->latitude ?: null,
-                'longitude' => $this->longitude ?: null,
+                'posisi' => $this->posisi ?: null,
             ];
 
             if ($this->penduduk && $this->penduduk->rumah_id) {

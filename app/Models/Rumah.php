@@ -15,8 +15,7 @@ class Rumah extends Model
         'kode_rumah',
         'rt_id',
         'alamat',
-        'latitude',
-        'longitude',
+        'posisi',
         'foto',
         'status_kepemilikan',
         'jenis_lantai',
@@ -35,8 +34,6 @@ class Rumah extends Model
     protected function casts(): array
     {
         return [
-            'latitude' => 'decimal:7',
-            'longitude' => 'decimal:7',
             'punya_mck' => 'boolean',
             'teraliri_listrik' => 'boolean',
             'luas_bangunan' => 'decimal:2',
@@ -66,6 +63,20 @@ class Rumah extends Model
 
     public function hasKoordinat(): bool
     {
-        return $this->latitude !== null && $this->longitude !== null;
+        return $this->posisi !== null && str_contains($this->posisi, ',');
+    }
+
+    public function getLatitudeAttribute(): ?float
+    {
+        if (!$this->posisi) return null;
+        $parts = explode(',', $this->posisi);
+        return count($parts) === 2 ? (float) trim($parts[0]) : null;
+    }
+
+    public function getLongitudeAttribute(): ?float
+    {
+        if (!$this->posisi) return null;
+        $parts = explode(',', $this->posisi);
+        return count($parts) === 2 ? (float) trim($parts[1]) : null;
     }
 }

@@ -51,8 +51,7 @@ class DatabaseSeeder extends Seeder
                 'kode_rumah' => 'R' . str_pad($i, 3, '0', STR_PAD_LEFT),
                 'dusun_id' => $dusun->id,
                 'alamat' => 'Jl. Contoh No. ' . $i,
-                'latitude' => -6.9 + (rand(-100, 100) / 10000),
-                'longitude' => 107.6 + (rand(-100, 100) / 10000),
+                'posisi' => (-6.9 + (rand(-100, 100) / 10000)) . ', ' . (107.6 + (rand(-100, 100) / 10000)),
                 'status_kepemilikan' => ['milik_sendiri', 'kontrak', 'keluarga'][rand(0, 2)],
                 'jenis_lantai' => ['keramik', 'semen', 'tanah'][rand(0, 2)],
                 'jenis_dinding' => ['tembok', 'kayu', 'bambu'][rand(0, 2)],
@@ -71,24 +70,21 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Masjid Al-Ikhlas',
             'jenis' => 'Masjid',
             'dusun_id' => $dusun1->id,
-            'latitude' => -6.905,
-            'longitude' => 107.605,
+            'posisi' => '-6.905, 107.605',
         ]);
 
         FasilitasUmum::create([
             'nama' => 'SD Negeri 1',
             'jenis' => 'Sekolah',
             'dusun_id' => $dusun2->id,
-            'latitude' => -6.910,
-            'longitude' => 107.610,
+            'posisi' => '-6.910, 107.610',
         ]);
 
         FasilitasUmum::create([
             'nama' => 'Puskesmas Pembantu',
             'jenis' => 'Puskesmas',
             'dusun_id' => $dusun1->id,
-            'latitude' => -6.908,
-            'longitude' => 107.608,
+            'posisi' => '-6.908, 107.608',
         ]);
 
         // Penduduk & KK

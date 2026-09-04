@@ -23,8 +23,7 @@ class Index extends Component
     public $jenis = '';
     public $selectedRw = '';
     public $rt_id = '';
-    public $latitude = '';
-    public $longitude = '';
+    public $posisi = '';
     public $keterangan = '';
     public $showForm = false;
 
@@ -32,8 +31,7 @@ class Index extends Component
         'nama' => 'required|string|max:255',
         'jenis' => 'required|string|max:100',
         'rt_id' => 'nullable|exists:rts,id',
-        'latitude' => 'nullable|numeric|between:-90,90',
-        'longitude' => 'nullable|numeric|between:-180,180',
+        'posisi' => 'nullable|string|max:50',
         'keterangan' => 'nullable|string|max:500',
     ];
 
@@ -71,8 +69,7 @@ class Index extends Component
         $this->nama = $f->nama;
         $this->jenis = $f->jenis;
         $this->rt_id = $f->rt_id;
-        $this->latitude = $f->latitude;
-        $this->longitude = $f->longitude;
+        $this->posisi = $f->posisi;
         $this->keterangan = $f->keterangan;
 
         if ($f->rt_id) {
@@ -94,8 +91,7 @@ class Index extends Component
             'nama' => $this->nama,
             'jenis' => $this->jenis,
             'rt_id' => $this->rt_id ?: null,
-            'latitude' => $this->latitude ?: null,
-            'longitude' => $this->longitude ?: null,
+            'posisi' => $this->posisi ?: null,
             'keterangan' => $this->keterangan,
         ];
 
@@ -131,8 +127,7 @@ class Index extends Component
         $this->selectedRw = '';
         $this->rt_id = '';
         $this->rtList = [];
-        $this->latitude = '';
-        $this->longitude = '';
+        $this->posisi = '';
         $this->keterangan = '';
         $this->showForm = false;
     }
