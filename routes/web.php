@@ -1,0 +1,72 @@
+<?php
+
+use App\Livewire\Penduduk\Index as PendudukIndex;
+use App\Livewire\Penduduk\Form as PendudukForm;
+use App\Livewire\Penduduk\Detail as PendudukDetail;
+use App\Livewire\KartuKeluarga\Index as KartuKeluargaIndex;
+use App\Livewire\KartuKeluarga\Form as KartuKeluargaForm;
+use App\Livewire\Peta\Index as PetaIndex;
+use App\Livewire\Surat\Index as SuratIndex;
+use App\Livewire\Surat\Kelola as SuratKelola;
+use App\Livewire\Pengumuman\Index as PengumumanIndex;
+use App\Livewire\FasilitasUmum\Index as FasilitasUmumIndex;
+use App\Livewire\Wilayah\Index as WilayahIndex;
+use App\Livewire\Rumah\Index as RumahIndex;
+use App\Livewire\StrukturPemerintahan\Index as StrukturPemerintahanIndex;
+use App\Livewire\AdminSettings\Index as AdminSettingsIndex;
+use App\Livewire\User\Index as UserIndex;
+use App\Livewire\Dashboard\Statistik;
+use Illuminate\Support\Facades\Route;
+
+Route::view('/', 'welcome');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', Statistik::class)->name('dashboard');
+    Route::view('profile', 'profile')->name('profile');
+
+    // Penduduk
+    Route::get('penduduk', PendudukIndex::class)->name('penduduk.index');
+    Route::get('penduduk/create', PendudukForm::class)->name('penduduk.create');
+    Route::get('penduduk/{penduduk}/edit', PendudukForm::class)->name('penduduk.edit');
+    Route::get('penduduk/{penduduk}', PendudukDetail::class)->name('penduduk.show');
+
+    // Kartu Keluarga
+    Route::get('kartu-keluarga', KartuKeluargaIndex::class)->name('kartu-keluarga.index');
+    Route::get('kartu-keluarga/create', KartuKeluargaForm::class)->name('kartu-keluarga.create');
+    Route::get('kartu-keluarga/{kartuKeluarga}/edit', KartuKeluargaForm::class)->name('kartu-keluarga.edit');
+
+    // Peta
+    Route::get('peta', PetaIndex::class)->name('peta.index');
+
+    // Surat
+    Route::get('surat', SuratIndex::class)->name('surat.index');
+    Route::get('surat/kelola', SuratKelola::class)->name('surat.kelola');
+
+    // Pengumuman
+    Route::get('pengumuman', PengumumanIndex::class)->name('pengumuman.index');
+
+    // Fasilitas Umum
+    Route::get('fasilitas-umum', FasilitasUmumIndex::class)->name('fasilitas-umum.index');
+
+    // Wilayah (RW/RT)
+    Route::get('wilayah', WilayahIndex::class)->name('wilayah.index');
+
+    // Rumah
+    Route::get('rumah', RumahIndex::class)->name('rumah.index');
+
+    // Struktur Pemerintahan
+    Route::get('struktur-pemerintahan', StrukturPemerintahanIndex::class)->name('struktur-pemerintahan.index');
+
+    // Admin Settings
+    Route::get('admin-settings', AdminSettingsIndex::class)->name('admin-settings.index');
+
+    // User Management
+    Route::get('user', UserIndex::class)->name('user.index');
+});
+
+// Public routes
+Route::get('surat/ajukan', \App\Livewire\Surat\Ajukan::class)->name('surat.ajukan');
+Route::get('surat/tracking', \App\Livewire\Surat\Tracking::class)->name('surat.tracking');
+Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');
+
+require __DIR__.'/auth.php';
