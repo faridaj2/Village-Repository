@@ -25,6 +25,9 @@ new #[Layout('layouts.guest')] class extends Component
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $isFirstUser = User::count() === 0;
+        $validated['role'] = $isFirstUser ? 'super_admin' : 'operator';
+
         event(new Registered($user = User::create($validated)));
 
         Auth::login($user);
