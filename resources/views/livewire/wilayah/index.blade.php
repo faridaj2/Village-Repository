@@ -148,10 +148,6 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Ketua RT</label>
-                    <input wire:model="rtKetua" type="text" placeholder="Nama ketua RT" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
-                </div>
-                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">Batas Wilayah (GeoJSON)</label>
                     <p class="text-xs text-gray-500 mb-2">Paste GeoJSON dari geojson.io</p>
                     <textarea wire:model="rtBoundary" rows="6" placeholder='{"type":"FeatureCollection","features":[...]}' class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"></textarea>
