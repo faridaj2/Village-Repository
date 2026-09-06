@@ -14,6 +14,9 @@ use App\Livewire\Surat\Detail as SuratDetail;
 use App\Livewire\Surat\Archive as SuratArchive;
 use App\Livewire\Surat\Template\Index as TemplateIndex;
 use App\Livewire\Surat\Template\Form as TemplateForm;
+use App\Livewire\Surat\Manual\Index as SuratManualIndex;
+use App\Livewire\Surat\Manual\Form as SuratManualForm;
+use App\Livewire\Surat\Manual\Blok as SuratManualBlok;
 use App\Livewire\Pengumuman\Index as PengumumanIndex;
 use App\Livewire\FasilitasUmum\Index as FasilitasUmumIndex;
 use App\Livewire\Wilayah\Index as WilayahIndex;
@@ -60,6 +63,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('surat/templates', TemplateIndex::class)->name('surat.template.index');
     Route::get('surat/templates/create', TemplateForm::class)->name('surat.template.create');
     Route::get('surat/templates/{id}/edit', TemplateForm::class)->name('surat.template.edit');
+
+    // Surat Manual (tanpa template)
+    Route::get('surat-manual', SuratManualIndex::class)->name('surat.manual.index');
+    Route::get('surat-manual/create', SuratManualForm::class)->name('surat.manual.create');
+    Route::get('surat-manual/{id}/edit', SuratManualForm::class)->name('surat.manual.edit');
+    Route::get('surat-manual-blok', SuratManualBlok::class)->name('surat.manual.blok');
+
     Route::get('surat/{surat}', SuratDetail::class)->name('surat.detail');
     Route::get('surat/{surat}/pdf', function (\App\Models\Surat $surat) {
         $path = SuratService::getOrCreatePdf($surat);

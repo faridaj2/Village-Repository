@@ -27,9 +27,9 @@ class Create extends Component
 
     // Step 3: Review & finalize
     #[Validate('nullable|string|max:100')]
-    public $nomorManual = '';
+    public $nomorUrutManual = '';
 
-    #[Validate('required|date')]
+    #[Validate('nullable|date')]
     public $tanggalSurat = '';
 
     #[Validate('required|in:a4,f4')]
@@ -41,7 +41,8 @@ class Create extends Component
 
     public function mount()
     {
-        $this->tanggalSurat = now()->format('Y-m-d');
+        // Kosongkan default agar auto pakai now() saat load preview
+        $this->tanggalSurat = '';
     }
 
     // ── Step Navigation ──
@@ -96,6 +97,20 @@ class Create extends Component
         $this->nik = $this->penduduk?->nik ?? '';
     }
 
+    public function updatedNomorUrutManual()
+    {
+        if ($this->step === 3 && $this->selectedTemplateId && $this->selectedPendudukId) {
+            $this->loadPreview();
+        }
+    }
+
+    public function updatedTanggalSurat()
+    {
+        if ($this->step === 3 && $this->selectedTemplateId && $this->selectedPendudukId) {
+            $this->loadPreview();
+        }
+    }
+
     // ── Step 3: Preview & Generate ──
 
     public function loadPreview()
@@ -108,18 +123,19 @@ class Create extends Component
         $data = SuratService::buildDataFromPenduduk($penduduk);
 
         // Add surat data
-        $nomor = SuratService::generateNomor($template, $this->nomorManual);
+        $nomor = SuratService::generateNomor($template, $this->nomorUrutManual);
+        $tanggal = $this->tanggalSurat ? \Carbon\Carbon::parse($this->tanggalSurat) : now();
         $data['surat'] = [
             'nomor' => $nomor,
-            'tanggal' => \Carbon\Carbon::parse($this->tanggalSurat)->format('d'),
+            'tanggal' => $tanggal->format('d'),
             'bulan' => '',
             'bulan_romawi' => '',
-            'tahun' => \Carbon\Carbon::parse($this->tanggalSurat)->format('Y'),
+            'tahun' => $tanggal->format('Y'),
             'jenis' => ucfirst(str_replace('_', ' ', $template->jenis_surat)),
         ];
 
         // Fixbulan values
-        $bulan = (int) \Carbon\Carbon::parse($this->tanggalSurat)->format('m');
+        $bulan = (int) $tanggal->format('m');
         $bulanIndo = [
             1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
             5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
@@ -151,7 +167,7 @@ class Create extends Component
         ]);
 
         $template = SuratTemplate::find($this->selectedTemplateId);
-        $nomor = SuratService::generateNomor($template, $this->nomorManual);
+        $nomor = SuratService::generateNomor($template, $this->nomorUrutManual);
 
         $surat = Surat::create([
             'nomor_surat' => $nomor,
@@ -160,7 +176,7 @@ class Create extends Component
             'penduduk_id' => $this->selectedPendudukId,
             'jenis_surat' => $template->jenis_surat,
             'data_isian' => $this->dataIsian,
-            'nomor_manual' => $this->nomorManual ?: null,
+            'nomor_manual' => null,
             'status' => 'draft',
             'paper_size' => $this->paperSize,
             'draft_html' => $this->draftHtml,
@@ -179,7 +195,7 @@ class Create extends Component
         ]);
 
         $template = SuratTemplate::find($this->selectedTemplateId);
-        $nomor = SuratService::generateNomor($template, $this->nomorManual);
+        $nomor = SuratService::generateNomor($template, $this->nomorUrutManual);
 
         $surat = Surat::create([
             'nomor_surat' => $nomor,
@@ -188,7 +204,7 @@ class Create extends Component
             'penduduk_id' => $this->selectedPendudukId,
             'jenis_surat' => $template->jenis_surat,
             'data_isian' => $this->dataIsian,
-            'nomor_manual' => $this->nomorManual ?: null,
+            'nomor_manual' => null,
             'status' => 'selesai',
             'paper_size' => $this->paperSize,
             'draft_html' => $this->draftHtml,

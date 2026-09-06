@@ -50,7 +50,17 @@
                     @endphp
 
                     @foreach ($navItems as $item)
-                        @php $active = request()->routeIs($item['route'] === 'dashboard' ? 'dashboard' : str_replace('.index', '.*', $item['route'])); @endphp
+                        @php
+                            if ($item['route'] === 'dashboard') {
+                                $active = request()->routeIs('dashboard');
+                            } elseif ($item['route'] === 'surat.index') {
+                                $active = request()->routeIs('surat.*') && !request()->routeIs('surat.manual.*');
+                            } elseif ($item['route'] === 'surat.manual.index') {
+                                $active = request()->routeIs('surat.manual.*');
+                            } else {
+                                $active = request()->routeIs(str_replace('.index', '.*', $item['route']));
+                            }
+                        @endphp
                         <a href="{{ route($item['route']) }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ $active ? 'bg-indigo-50 text-indigo-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                             <div class="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center {{ $active ? 'bg-indigo-100' : 'bg-gray-100 group-hover:bg-gray-200' }} transition-colors">
                                 <svg class="w-[18px] h-[18px] {{ $active ? 'text-indigo-600' : 'text-gray-500 group-hover:text-gray-700' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $item['icon'] !!}</svg>

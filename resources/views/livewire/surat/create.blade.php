@@ -125,13 +125,14 @@
 
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Nomor Surat</label>
-                            <input wire:model="nomorManual" type="text" placeholder="Kosongkan untuk auto-generate" class="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
-                            <p class="text-[11px] text-gray-400 mt-1">Kosongkan = nomor otomatis</p>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Nomor Urut</label>
+                            <input wire:model.live="nomorUrutManual" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Kosongkan untuk auto" class="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                            <p class="text-[11px] text-gray-400 mt-1">Format tetap mengikuti template, hanya nomor urut yang berubah</p>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Tanggal Surat</label>
                             <input wire:model="tanggalSurat" type="date" class="w-full px-3 py-2 bg-gray-50 border-0 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500">
+                            <p class="text-[11px] text-gray-400 mt-1">Kosongkan untuk otomatis (hari ini)</p>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Ukuran Kertas</label>

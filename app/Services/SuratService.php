@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SuratService
 {
-    private static array $bulanRomawi = [
+    public static array $bulanRomawi = [
         1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV',
         5 => 'V', 6 => 'VI', 7 => 'VII', 8 => 'VIII',
         9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII',
@@ -28,7 +28,34 @@ class SuratService
      */
     public static function generateNomor(SuratTemplate $template, ?string $overrideNomor = null): string
     {
-        if ($overrideNomor && trim($overrideNomor) !== '') {
+        $overrideNomor = trim((string) $overrideNomor);
+
+        // Jika override diisi, cek apakah hanya angka (nomor urut saja)
+        if ($overrideNomor !== '') {
+            if (is_numeric($overrideNomor)) {
+                // Hanya nomor urut, tetap gunakan format template
+                $nomorUrut = str_pad($overrideNomor, 3, '0', STR_PAD_LEFT);
+                $kodeJenis = strtoupper(substr($template->slug, 0, 3));
+                $bulan = (int) now()->format('m');
+                $tahun = now()->format('Y');
+                $bulanRomawi = self::$bulanRomawi[$bulan];
+
+                $format = $template->default_nomor_format
+                    ?: '{nomor}/SRT/{jenis}/{bulan_romawi}/{tahun}';
+
+                $replacements = [
+                    '{nomor}' => $nomorUrut,
+                    '{jenis}' => $kodeJenis,
+                    '{kode_jenis}' => $kodeJenis,
+                    '{bulan_romawi}' => $bulanRomawi,
+                    '{bulan}' => $bulan,
+                    '{tahun}' => $tahun,
+                ];
+
+                return strtr($format, $replacements);
+            }
+
+            // Selain angka, anggap nomor manual lengkap
             return $overrideNomor;
         }
 
@@ -37,14 +64,41 @@ class SuratService
         $tahun = now()->format('Y');
         $bulanRomawi = self::$bulanRomawi[$bulan];
 
-        $lastNumber = Surat::where('jenis_surat', $template->jenis_surat)
-            ->whereYear('created_at', $tahun)
-            ->whereMonth('created_at', $bulan)
-            ->count();
+        // Ambil nomor urut tertinggi dari surat-surat dengan template yang sama
+        // pada bulan/tahun ini. Fallback ke jenis_surat jika template tidak punya id.
+        $query = Surat::whereYear('created_at', $tahun)
+            ->whereMonth('created_at', $bulan);
 
-        $nomorUrut = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        if ($template->id) {
+            $query->where('surat_template_id', $template->id);
+        } else {
+            $query->where('jenis_surat', $template->jenis_surat);
+        }
 
-        return "{$nomorUrut}/SRT/{$kodeJenis}/{$bulanRomawi}/{$tahun}";
+        $lastNumber = $query->get()
+            ->map(function ($surat) {
+                if ($surat->nomor_manual) {
+                    return (int) preg_replace('/\D/', '', substr($surat->nomor_manual, 0, 3)) ?: 0;
+                }
+                return (int) preg_replace('/\D/', '', substr((string) $surat->nomor_surat, 0, 3)) ?: 0;
+            })
+            ->max();
+
+        $nomorUrut = str_pad(($lastNumber ?? 0) + 1, 3, '0', STR_PAD_LEFT);
+
+        $format = $template->default_nomor_format
+            ?: '{nomor}/SRT/{jenis}/{bulan_romawi}/{tahun}';
+
+        $replacements = [
+            '{nomor}' => $nomorUrut,
+            '{jenis}' => $kodeJenis,
+            '{kode_jenis}' => $kodeJenis,
+            '{bulan_romawi}' => $bulanRomawi,
+            '{bulan}' => $bulan,
+            '{tahun}' => $tahun,
+        ];
+
+        return strtr($format, $replacements);
     }
 
     /**
