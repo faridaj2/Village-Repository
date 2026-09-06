@@ -8,12 +8,7 @@
         </div>
     </x-slot>
 
-    @if (session()->has('message'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-2xl">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-sm font-medium">{{ session('message') }}</span>
-        </div>
-    @endif
+    <x-flash-toast />
 
     <!-- Form -->
     @if ($showForm)
@@ -43,11 +38,7 @@
                         </select>
                         <p class="text-xs text-gray-400 mt-1">Kosongkan jika sejajar dengan pimpinan utama</p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Urutan</label>
-                        <input wire:model="urutan" type="number" min="0" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
-                        <p class="text-xs text-gray-400 mt-1">Urutan horizontal dalam satu level</p>
-                    </div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">Foto <span class="text-gray-400 font-normal">(opsional)</span></label>
                         <input wire:model="foto" type="text" placeholder="URL foto" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
@@ -64,23 +55,176 @@
     <!-- Bagan Struktur -->
     @if (count($strukturList) > 0)
         @php
-            $roots = $strukturList->whereNull('parent_id')->sortBy('urutan');
+            $roots = $strukturList->whereNull('parent_id');
         @endphp
         @if ($roots->count() > 0)
-            <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 overflow-x-auto">
-                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-6">Bagan Struktur</h3>
-
-                <div class="flex flex-col items-center min-w-fit">
-                    <!-- Level 0: Root nodes -->
-                    <div class="flex flex-wrap justify-center gap-6">
-                        @foreach ($roots as $item)
-                            @include('livewire.struktur-pemerintahan._node', ['item' => $item, 'depth' => 0])
-                        @endforeach
+            <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+                <div class="px-6 pt-4 pb-3 border-b border-gray-100 flex items-center justify-between">
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Bagan Struktur</h3>
+                    <div class="flex items-center gap-1">
+                        <button onclick="strukturZoomOut()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors" title="Zoom Out">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                        </button>
+                        <span id="zoomLevel" class="text-xs font-medium text-gray-500 w-12 text-center">100%</span>
+                        <button onclick="strukturZoomIn()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors" title="Zoom In">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        </button>
+                        <button onclick="strukturResetZoom()" class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors ml-1" title="Reset">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </button>
                     </div>
+                </div>
+
+                <div id="strukturViewport" style="overflow: hidden; cursor: grab; height: 500px; position: relative; background: repeating-conic-gradient(#f9fafb 0% 25%, white 0% 50%) 50% / 20px 20px;">
+                    <div id="strukturCanvas" style="transform-origin: 0 0; position: absolute;">
+                        <div class="flex flex-col items-center">
+                            <div class="flex justify-center gap-4">
+                                @foreach ($roots as $item)
+                                    @include('livewire.struktur-pemerintahan._node', ['item' => $item, 'depth' => 0])
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-4 py-2 border-t border-gray-100 flex items-center justify-center">
+                    <p class="text-[11px] text-gray-400">Geser: tahan klik lalu seret &bull; Zoom: scroll mouse &bull; Tombol +/− di atas</p>
                 </div>
             </div>
         @endif
     @endif
+
+    @push('scripts')
+    <script>
+        (function() {
+            const viewport = document.getElementById('strukturViewport');
+            const canvas = document.getElementById('strukturCanvas');
+            const zoomLabel = document.getElementById('zoomLevel');
+            if (!viewport || !canvas) return;
+
+            let scale = 0.5;
+            let panX = 0;
+            let panY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let startPanX = 0;
+            let startPanY = 0;
+
+            function applyTransform() {
+                canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+                zoomLabel.textContent = Math.round(scale * 100) + '%';
+            }
+
+            // Center on load
+            function centerView() {
+                const vw = viewport.clientWidth;
+                const cw = canvas.scrollWidth || canvas.offsetWidth;
+                if (cw > 0) {
+                    panX = (vw - cw * scale) / 2;
+                    panY = 20;
+                }
+                applyTransform();
+            }
+
+            // Mouse drag
+            viewport.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startPanX = panX;
+                startPanY = panY;
+                viewport.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                panX = startPanX + (e.clientX - startX);
+                panY = startPanY + (e.clientY - startY);
+                applyTransform();
+            });
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                viewport.style.cursor = 'grab';
+            });
+
+            // Scroll wheel zoom
+            viewport.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                const newScale = Math.min(2, Math.max(0.2, scale + delta));
+
+                // Zoom toward cursor
+                const rect = viewport.getBoundingClientRect();
+                const cx = e.clientX - rect.left;
+                const cy = e.clientY - rect.top;
+                const ratio = newScale / scale;
+                panX = cx - (cx - panX) * ratio;
+                panY = cy - (cy - panY) * ratio;
+
+                scale = newScale;
+                applyTransform();
+            }, { passive: false });
+
+            // Touch support
+            let lastTouchDist = 0;
+            let lastTouchX = 0;
+            let lastTouchY = 0;
+            viewport.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    startPanX = panX;
+                    startPanY = panY;
+                } else if (e.touches.length === 2) {
+                    isDragging = false;
+                    lastTouchDist = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+                }
+                e.preventDefault();
+            }, { passive: false });
+            viewport.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1 && isDragging) {
+                    panX = startPanX + (e.touches[0].clientX - startX);
+                    panY = startPanY + (e.touches[0].clientY - startY);
+                    applyTransform();
+                } else if (e.touches.length === 2) {
+                    const dist = Math.hypot(
+                        e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY
+                    );
+                    const newScale = Math.min(2, Math.max(0.2, scale * (dist / lastTouchDist)));
+                    const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    const rect = viewport.getBoundingClientRect();
+                    const cx = midX - rect.left;
+                    const cy = midY - rect.top;
+                    const ratio = newScale / scale;
+                    panX = cx - (cx - panX) * ratio;
+                    panY = cy - (cy - panY) * ratio;
+                    scale = newScale;
+                    lastTouchDist = dist;
+                    applyTransform();
+                }
+                e.preventDefault();
+            }, { passive: false });
+            viewport.addEventListener('touchend', () => { isDragging = false; });
+
+            // Expose zoom controls
+            window.strukturZoomIn = () => { scale = Math.min(2, scale + 0.15); applyTransform(); };
+            window.strukturZoomOut = () => { scale = Math.max(0.2, scale - 0.15); applyTransform(); };
+            window.strukturResetZoom = () => { scale = 0.5; centerView(); };
+
+            // Init with delay to ensure DOM is fully rendered
+            centerView();
+            setTimeout(centerView, 100);
+            setTimeout(centerView, 300);
+        })();
+    </script>
+    @endpush
 
     <!-- Daftar -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
@@ -111,7 +255,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-1">
-                        <span class="text-xs text-gray-400 mr-2">#{{ $item->urutan }}</span>
+
                         <button wire:click="edit({{ $item->id }})" class="p-2 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 transition-colors" title="Edit">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                         </button>

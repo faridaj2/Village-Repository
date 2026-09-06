@@ -19,6 +19,19 @@ class Index extends Component
     public $sambutan = '';
     public $enableRegistration = true;
 
+    // Identitas Desa & Tanda Tangan (dipakai template surat)
+    public $kecamatan = '';
+    public $kabupaten = '';
+    public $provinsi = '';
+    public $alamatDesa = '';
+    public $kodePos = '';
+    public $telepon = '';
+    public $email = '';
+    public $ttdKadesNama = '';
+    public $ttdKadesJabatan = '';
+    public $ttdSekdesNama = '';
+    public $ttdSekdesJabatan = '';
+
     public function mount()
     {
         $this->loadSettings();
@@ -35,6 +48,18 @@ class Index extends Component
         $this->namaDesa = AdminSetting::get('nama_desa', 'Desa Waeleman');
         $this->sambutan = AdminSetting::get('sambutan', 'Selamat datang di Sistem Informasi Desa');
         $this->enableRegistration = AdminSetting::get('enable_registration', true);
+
+        $this->kecamatan = AdminSetting::get('nama_kecamatan', '');
+        $this->kabupaten = AdminSetting::get('nama_kabupaten', '');
+        $this->provinsi = AdminSetting::get('nama_provinsi', '');
+        $this->alamatDesa = AdminSetting::get('alamat_desa', '');
+        $this->kodePos = AdminSetting::get('kode_pos', '');
+        $this->telepon = AdminSetting::get('telepon', '');
+        $this->email = AdminSetting::get('email', '');
+        $this->ttdKadesNama = AdminSetting::get('ttd_kades_nama', '');
+        $this->ttdKadesJabatan = AdminSetting::get('ttd_kades_jabatan', '');
+        $this->ttdSekdesNama = AdminSetting::get('ttd_sekdes_nama', '');
+        $this->ttdSekdesJabatan = AdminSetting::get('ttd_sekdes_jabatan', '');
     }
 
     public function addSlider()
@@ -59,6 +84,23 @@ class Index extends Component
         AdminSetting::set('sambutan', $this->sambutan);
         AdminSetting::set('enable_registration', $this->enableRegistration);
         session()->flash('message', 'Pengaturan umum berhasil disimpan.');
+    }
+
+    public function saveIdentitasSurat()
+    {
+        AdminSetting::set('nama_desa', $this->namaDesa);
+        AdminSetting::set('nama_kecamatan', $this->kecamatan);
+        AdminSetting::set('nama_kabupaten', $this->kabupaten);
+        AdminSetting::set('nama_provinsi', $this->provinsi);
+        AdminSetting::set('alamat_desa', $this->alamatDesa);
+        AdminSetting::set('kode_pos', $this->kodePos);
+        AdminSetting::set('telepon', $this->telepon);
+        AdminSetting::set('email', $this->email);
+        AdminSetting::set('ttd_kades_nama', $this->ttdKadesNama);
+        AdminSetting::set('ttd_kades_jabatan', $this->ttdKadesJabatan);
+        AdminSetting::set('ttd_sekdes_nama', $this->ttdSekdesNama);
+        AdminSetting::set('ttd_sekdes_jabatan', $this->ttdSekdesJabatan);
+        session()->flash('message', 'Pengaturan identitas desa & tanda tangan berhasil disimpan.');
     }
 
     public function render()

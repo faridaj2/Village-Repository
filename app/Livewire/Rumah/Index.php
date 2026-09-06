@@ -57,7 +57,7 @@ class Index extends Component
     public function render()
     {
         $query = Rumah::query()
-            ->with('rt.rw')
+            ->with(['rt.rw', 'kartuKeluargas.kepalaKeluarga', 'penduduks'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('kode_rumah', 'like', '%' . $this->search . '%')

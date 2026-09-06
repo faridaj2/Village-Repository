@@ -1,6 +1,6 @@
 # User Preferences
 - Communicates in Bahasa Indonesia (Indonesian). Confidence: 0.9
-- Gives very brief instructions (e.g. "baca dan lakukan") and expects the agent to read project docs and autonomously execute the full plan without asking clarifying questions. Confidence: 0.9
+- Gives very brief instructions (e.g. "baca dan lakukan") and expects the agent to read project docs and autonomously execute the full plan without asking clarifying questions. However, when describing a nuanced architectural concept, explicitly appreciates the agent confirming its understanding before implementing ("tanyakan jika masih belum jelas"). Two modes: brief commands → execute autonomously; detailed concept descriptions → confirm understanding first. Confidence: 0.85
 - Prefers the agent to work through an entire task list end-to-end without pausing for confirmation. Confidence: 0.85
 - Prefers modern, polished UI: gradient stat cards with colored shadows, donut charts, SVG status icons (not emoji), rounded-2xl cards, and clean card-based layouts. Confidence: 0.9
 - Wants comprehensive, full-page redesigns done all at once ("semuanya dibuat modern") rather than incremental tweaks. Confidence: 0.85
@@ -24,3 +24,6 @@
 - Expects organizational charts to support explicit parent-child hierarchy via `parent_id` (not just `urutan` grouping). Wants full control over who is below whom and who is parallel. Uses `parent_id` for vertical hierarchy (who reports to whom) and `urutan` for horizontal ordering within the same level. Items with no parent are root-level peers. Confidence: 0.9
 - Says "push" to mean the full git workflow: add the changed file(s), write a descriptive commit message, and push — expects the agent to infer which files and craft an appropriate message without further input. Confidence: 0.9
 - Deploys to shared hosting without Node.js — frontend assets (Vite/npm) must be built locally and the `public/build` directory committed to git. The agent should never suggest running `npm` on the server. Confidence: 0.95
+- Prefers lean database schemas with only actively used columns — will explicitly ask to remove unused fields ("banyak field tidak terpakai di kode, optimisasi"). Expects the agent to audit migration columns against actual code usage and strip out dead fields rather than keeping them "just in case". Confidence: 0.9
+- After database schema changes, expects a comprehensive audit of all pages, routes, Livewire components, Blade views, and models to verify nothing references removed columns or is broken. Will request this with a brief command like "cek semua halaman, route, dan fungsi". Confidence: 0.85
+- Prefers individual-level entity ownership over household/family-level ownership for assets. E.g. wanted rumah (house) to be many-to-many per penduduk (person) rather than only linked to KK (family card). Expects pivot tables with keterangan fields and search-to-add UI for linking. Confidence: 0.85

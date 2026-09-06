@@ -6,12 +6,7 @@
         </div>
     </x-slot>
 
-    @if (session()->has('message'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-2xl">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-sm font-medium">{{ session('message') }}</span>
-        </div>
-    @endif
+    <x-flash-toast />
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
         <!-- Toolbar -->
@@ -28,6 +23,10 @@
                         <option value="semi_permanen">Semi Permanen</option>
                         <option value="darurat">Darurat</option>
                     </select>
+                    <a href="{{ route('rumah.create') }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Tambah
+                    </a>
                 </div>
             </div>
 
@@ -63,6 +62,7 @@
                         <th class="text-left py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">RW/RT</th>
                         <th class="text-left py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategori</th>
                         <th class="text-left py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Fasilitas</th>
+                        <th class="text-left py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Milik</th>
                         <th class="text-left py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Penghuni</th>
                         <th class="text-right py-3.5 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Aksi</th>
                     </tr>
@@ -112,14 +112,40 @@
                             <td class="py-3.5 px-5 text-sm text-gray-600">
                                 @php
                                     $kkCount = $rumah->kartuKeluargas()->count();
-                                    $pendudukCount = $rumah->penduduks()->count();
+                                    $jiwaFromKk = \App\Models\Penduduk::whereIn('kartu_keluarga_id', $rumah->kartuKeluargas()->pluck('id'))->count();
+                                    $jiwaIndividu = $rumah->penduduks()->count();
+                                    $totalJiwa = $jiwaFromKk + $jiwaIndividu;
                                 @endphp
                                 <span>{{ $kkCount }} KK</span>
                                 <span class="text-gray-400 mx-1">/</span>
-                                <span>{{ $pendudukCount }} jiwa</span>
+                                <span>{{ $totalJiwa }} jiwa</span>
+                            </td>
+                            <td class="py-3.5 px-5 text-sm">
+                                @php
+                                    $milikLabels = [];
+                                    foreach ($rumah->kartuKeluargas as $kk) {
+                                        if ($kk->kepalaKeluarga) {
+                                            $milikLabels[] = ['name' => $kk->kepalaKeluarga->nama, 'type' => 'KK'];
+                                        }
+                                    }
+                                    foreach ($rumah->penduduks as $p) {
+                                        $milikLabels[] = ['name' => $p->nama, 'type' => 'Individu'];
+                                    }
+                                @endphp
+                                @forelse ($milikLabels as $milik)
+                                    <div class="flex items-center gap-1.5 mb-1 last:mb-0">
+                                        <span class="text-gray-900 font-medium">{{ $milik['name'] }}</span>
+                                        <span class="inline-flex items-center px-1.5 py-0.5 {{ $milik['type'] === 'KK' ? 'bg-indigo-50 text-indigo-700' : 'bg-blue-50 text-blue-700' }} text-[10px] font-semibold rounded">{{ $milik['type'] }}</span>
+                                    </div>
+                                @empty
+                                    <span class="text-gray-400">-</span>
+                                @endforelse
                             </td>
                             <td class="py-3.5 px-5 text-right">
                                 <div class="flex items-center justify-end gap-1">
+                                    <a href="{{ route('rumah.edit', $rumah) }}" class="p-2 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 transition-colors" title="Edit">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    </a>
                                     <button wire:click="delete({{ $rumah->id }})" wire:confirm="Yakin ingin menghapus rumah ini?" class="p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
@@ -128,7 +154,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-16 text-center">
+                            <td colspan="7" class="py-16 text-center">
                                 <div class="flex flex-col items-center">
                                     <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
                                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>

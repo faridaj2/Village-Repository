@@ -6,12 +6,7 @@
         </div>
     </x-slot>
 
-    @if (session()->has('message'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-2xl">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-sm font-medium">{{ session('message') }}</span>
-        </div>
-    @endif
+    <x-flash-toast />
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
         <!-- Toolbar -->
@@ -90,7 +85,11 @@
                             </td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">{{ $penduduk->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">
-                                @if ($penduduk->kartuKeluarga?->rumah?->rt)
+                                @if ($penduduk->rumah?->rt)
+                                    <span class="font-medium">{{ $penduduk->rumah->rt->rw->nama ?? '-' }}</span>
+                                    <span class="text-gray-400">/</span>
+                                    <span>{{ $penduduk->rumah->rt->nama ?? '-' }}</span>
+                                @elseif ($penduduk->kartuKeluarga?->rumah?->rt)
                                     <span class="font-medium">{{ $penduduk->kartuKeluarga->rumah->rt->rw->nama ?? '-' }}</span>
                                     <span class="text-gray-400">/</span>
                                     <span>{{ $penduduk->kartuKeluarga->rumah->rt->nama ?? '-' }}</span>
@@ -113,6 +112,9 @@
                                     <span class="inline-flex items-center px-2.5 py-1 {{ $s[0] }} text-xs font-medium rounded-lg">{{ $s[1] }}</span>
                                     @if ($penduduk->jenis_penduduk === 'pendatang')
                                         <span class="inline-flex items-center px-2 py-0.5 bg-violet-50 text-violet-700 text-[10px] font-semibold rounded-md">Pendatang</span>
+                                    @endif
+                                    @if ($penduduk->status_kk)
+                                        <span class="inline-flex items-center px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-semibold rounded-md">{{ ucfirst($penduduk->status_kk) }}</span>
                                     @endif
                                 </div>
                             </td>

@@ -5,18 +5,28 @@ use App\Livewire\Penduduk\Form as PendudukForm;
 use App\Livewire\Penduduk\Detail as PendudukDetail;
 use App\Livewire\KartuKeluarga\Index as KartuKeluargaIndex;
 use App\Livewire\KartuKeluarga\Form as KartuKeluargaForm;
+use App\Livewire\KartuKeluarga\Detail as KartuKeluargaDetail;
 use App\Livewire\Peta\Index as PetaIndex;
 use App\Livewire\Surat\Index as SuratIndex;
 use App\Livewire\Surat\Kelola as SuratKelola;
+use App\Livewire\Surat\Create as SuratCreate;
+use App\Livewire\Surat\Detail as SuratDetail;
+use App\Livewire\Surat\Archive as SuratArchive;
+use App\Livewire\Surat\Template\Index as TemplateIndex;
+use App\Livewire\Surat\Template\Form as TemplateForm;
 use App\Livewire\Pengumuman\Index as PengumumanIndex;
 use App\Livewire\FasilitasUmum\Index as FasilitasUmumIndex;
 use App\Livewire\Wilayah\Index as WilayahIndex;
 use App\Livewire\Rumah\Index as RumahIndex;
+use App\Livewire\Rumah\Form as RumahForm;
 use App\Livewire\StrukturPemerintahan\Index as StrukturPemerintahanIndex;
 use App\Livewire\AdminSettings\Index as AdminSettingsIndex;
 use App\Livewire\User\Index as UserIndex;
 use App\Livewire\Dashboard\Statistik;
+use App\Livewire\Media\Index as MediaIndex;
+use App\Services\SuratService;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::view('/', 'welcome');
 
@@ -34,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('kartu-keluarga', KartuKeluargaIndex::class)->name('kartu-keluarga.index');
     Route::get('kartu-keluarga/create', KartuKeluargaForm::class)->name('kartu-keluarga.create');
     Route::get('kartu-keluarga/{kartuKeluarga}/edit', KartuKeluargaForm::class)->name('kartu-keluarga.edit');
+    Route::get('kartu-keluarga/{kartuKeluarga}', KartuKeluargaDetail::class)->name('kartu-keluarga.show');
 
     // Peta
     Route::get('peta', PetaIndex::class)->name('peta.index');
@@ -41,6 +52,24 @@ Route::middleware(['auth'])->group(function () {
     // Surat
     Route::get('surat', SuratIndex::class)->name('surat.index');
     Route::get('surat/kelola', SuratKelola::class)->name('surat.kelola');
+    Route::get('surat/create', SuratCreate::class)->name('surat.create');
+    Route::get('surat/archive', SuratArchive::class)->name('surat.archive');
+    Route::get('surat/templates', TemplateIndex::class)->name('surat.template.index');
+    Route::get('surat/templates/create', TemplateForm::class)->name('surat.template.create');
+    Route::get('surat/templates/{id}/edit', TemplateForm::class)->name('surat.template.edit');
+    Route::get('surat/{surat}', SuratDetail::class)->name('surat.detail');
+    Route::get('surat/{surat}/pdf', function (\App\Models\Surat $surat) {
+        $path = SuratService::getOrCreatePdf($surat);
+        $filename = str_replace('/', '-', $surat->nomor_display) . '.pdf';
+
+        return response()->file(Storage::disk('local')->path($path), [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ]);
+    })->name('surat.pdf');
+
+    // Media / File
+    Route::get('media', MediaIndex::class)->name('media.index');
 
     // Pengumuman
     Route::get('pengumuman', PengumumanIndex::class)->name('pengumuman.index');
@@ -53,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Rumah
     Route::get('rumah', RumahIndex::class)->name('rumah.index');
+    Route::get('rumah/create', RumahForm::class)->name('rumah.create');
+    Route::get('rumah/{rumah}/edit', RumahForm::class)->name('rumah.edit');
 
     // Struktur Pemerintahan
     Route::get('struktur-pemerintahan', StrukturPemerintahanIndex::class)->name('struktur-pemerintahan.index');

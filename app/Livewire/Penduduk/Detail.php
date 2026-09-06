@@ -17,9 +17,11 @@ class Detail extends Component
     public $showAssignKk = false;
     public $selectedKkId = '';
 
-    public function mount($penduduk)
+    public function mount(Penduduk|string|int $penduduk)
     {
-        $this->penduduk = Penduduk::with(['kartuKeluarga', 'rumah.rt', 'mutasis'])->findOrFail($penduduk);
+        $this->penduduk = $penduduk instanceof Penduduk
+            ? $penduduk->load(['kartuKeluarga.rumah.rt', 'rumah.rt.rw', 'mutasis'])
+            : Penduduk::with(['kartuKeluarga.rumah.rt', 'rumah.rt.rw', 'mutasis'])->findOrFail($penduduk);
     }
 
     public function assignKk()

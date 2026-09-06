@@ -42,6 +42,11 @@ class Kelola extends Component
         session()->flash('message', 'Surat ditolak.');
     }
 
+    public function goto($id)
+    {
+        return redirect()->route('surat.detail', $id);
+    }
+
     public function render()
     {
         $query = Surat::with('penduduk')

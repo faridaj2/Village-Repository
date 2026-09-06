@@ -51,6 +51,9 @@ class Form extends Component
     #[Validate('required|in:penduduk,pendatang')]
     public $jenis_penduduk = 'penduduk';
 
+    #[Validate('nullable|in:suami,istri,anak')]
+    public $status_kk = '';
+
     // Status khusus
     public $miskin = false;
 
@@ -68,27 +71,39 @@ class Form extends Component
     public $selectedRwForm = '';
     public $selectedRtForm = '';
 
-    // Koordinat (opsional)
-    public $posisi = '';
-
-    // Rumah fields (opsional, langsung ke penduduk)
+    // Rumah KK fields
     public $hasRumah = false;
     public $rumahRwId = '';
     public $rumahRtId = '';
     public $rumahRtList = [];
+    public $kodeRumah = '';
     public $kategoriRumah = '';
+    public $kategoriRtlh = '';
     public $teraliriListrik = false;
     public $punyaMckRumah = false;
+    public $posisi = '';
+
+    // Rumah Individu fields
+    public $hasRumahIndividu = false;
+    public $rumahIndividuRwId = '';
+    public $rumahIndividuRtId = '';
+    public $rumahIndividuRtList = [];
+    public $kodeRumahIndividu = '';
+    public $kategoriRumahIndividu = '';
+    public $kategoriRtlhIndividu = '';
+    public $teraliriListrikIndividu = false;
+    public $punyaMckIndividu = false;
+    public $posisiIndividu = '';
 
     public function mount($penduduk = null)
     {
-        $this->penduduk = $penduduk ? Penduduk::find($penduduk) : null;
+        $this->penduduk = $penduduk instanceof Penduduk ? $penduduk : ($penduduk ? Penduduk::find($penduduk) : null);
         $this->rwList = Rw::orderBy('nama')->get();
 
         if ($this->penduduk) {
             $this->fill($this->penduduk->only([
                 'nik', 'nama', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
-                'agama', 'pendidikan_terakhir', 'pekerjaan', 'status_kawin', 'status', 'jenis_penduduk',
+                'agama', 'pendidikan_terakhir', 'pekerjaan', 'status_kawin', 'status', 'jenis_penduduk', 'status_kk',
             ]));
             $this->tanggal_lahir = $this->penduduk->tanggal_lahir?->format('Y-m-d');
 
@@ -103,6 +118,7 @@ class Form extends Component
                     $this->kkSearch = $kk->no_kk;
                     if ($kk->kepala_keluarga_id === $this->penduduk->id) {
                         $this->isKepalaKeluarga = true;
+                        $this->no_kk_baru = $kk->no_kk;
                     }
                     // Load RT/RW from KK's house
                     if ($kk->rumah && $kk->rumah->rt) {
@@ -113,19 +129,38 @@ class Form extends Component
                 }
             }
 
-            // Load existing rumah (langsung)
-            if ($this->penduduk->rumah_id) {
+            // Load rumah dari KK jika kepala keluarga
+            if ($this->isKepalaKeluarga && $this->penduduk->kartuKeluarga?->rumah_id) {
+                $rumah = $this->penduduk->kartuKeluarga->rumah;
                 $this->hasRumah = true;
-                $rumah = $this->penduduk->rumah;
-                if ($rumah && $rumah->rt) {
+                if ($rumah->rt) {
                     $this->rumahRwId = $rumah->rt->rw_id;
                     $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
                     $this->rumahRtId = $rumah->rt_id;
                 }
+                $this->kodeRumah = $rumah->kode_rumah ?? '';
                 $this->kategoriRumah = $rumah->kategori_rumah ?? '';
+                $this->kategoriRtlh = $rumah->kategori_rtlh ?? '';
                 $this->teraliriListrik = $rumah->teraliri_listrik ?? false;
                 $this->punyaMckRumah = $rumah->punya_mck ?? false;
                 $this->posisi = $rumah->posisi ?? '';
+            }
+
+            // Load rumah individu
+            if ($this->penduduk->rumah_id && $this->penduduk->rumah) {
+                $rumah = $this->penduduk->rumah;
+                $this->hasRumahIndividu = true;
+                if ($rumah->rt) {
+                    $this->rumahIndividuRwId = $rumah->rt->rw_id;
+                    $this->rumahIndividuRtList = Rt::where('rw_id', $this->rumahIndividuRwId)->orderBy('nama')->get();
+                    $this->rumahIndividuRtId = $rumah->rt_id;
+                }
+                $this->kodeRumahIndividu = $rumah->kode_rumah ?? '';
+                $this->kategoriRumahIndividu = $rumah->kategori_rumah ?? '';
+                $this->kategoriRtlhIndividu = $rumah->kategori_rtlh ?? '';
+                $this->teraliriListrikIndividu = $rumah->teraliri_listrik ?? false;
+                $this->punyaMckIndividu = $rumah->punya_mck ?? false;
+                $this->posisiIndividu = $rumah->posisi ?? '';
             }
         }
     }
@@ -147,6 +182,16 @@ class Form extends Component
             $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
         } else {
             $this->rumahRtList = [];
+        }
+    }
+
+    public function updatedRumahIndividuRwId()
+    {
+        $this->rumahIndividuRtId = '';
+        if ($this->rumahIndividuRwId) {
+            $this->rumahIndividuRtList = Rt::where('rw_id', $this->rumahIndividuRwId)->orderBy('nama')->get();
+        } else {
+            $this->rumahIndividuRtList = [];
         }
     }
 
@@ -216,6 +261,10 @@ class Form extends Component
             $rules['rumahRtId'] = 'required|exists:rts,id';
         }
 
+        if ($this->hasRumahIndividu) {
+            $rules['rumahIndividuRtId'] = 'required|exists:rts,id';
+        }
+
         $this->validate($rules);
 
         if (!$this->penduduk) {
@@ -226,23 +275,29 @@ class Form extends Component
 
         $kkId = null;
 
-        // If creating as head of family, create Rumah + KK
         if ($this->isKepalaKeluarga) {
-            $rt = Rt::find($this->selectedRtForm);
+            if ($this->penduduk && $this->penduduk->kartu_keluarga_id) {
+                // Edit: sudah punya KK, gunakan yang ada
+                $kkId = $this->penduduk->kartu_keluarga_id;
+                $kk = $this->penduduk->kartuKeluarga;
+                if ($kk && $this->no_kk_baru && $kk->no_kk !== $this->no_kk_baru) {
+                    $kk->update(['no_kk' => $this->no_kk_baru]);
+                }
+            } else {
+                // Create: buat KK baru
+                $rumahBaru = Rumah::create([
+                    'rt_id' => $this->selectedRtForm,
+                    'alamat' => null,
+                    'posisi' => $this->posisi ?: null,
+                ]);
 
-            // Create a house linked to the selected RT
-            $rumah = Rumah::create([
-                'rt_id' => $this->selectedRtForm,
-                'alamat' => null,
-                'posisi' => $this->posisi ?: null,
-            ]);
-
-            $kk = KartuKeluarga::create([
-                'no_kk' => $this->no_kk_baru,
-                'rumah_id' => $rumah->id,
-                'alamat' => null,
-            ]);
-            $kkId = $kk->id;
+                $kk = KartuKeluarga::create([
+                    'no_kk' => $this->no_kk_baru,
+                    'rumah_id' => $rumahBaru->id,
+                    'alamat' => null,
+                ]);
+                $kkId = $kk->id;
+            }
         } else {
             $kkId = $this->selectedKkId ?: null;
         }
@@ -261,39 +316,64 @@ class Form extends Component
             'status' => $this->status,
             'jenis_penduduk' => $this->jenis_penduduk,
             'status_khusus' => $this->miskin ? ['miskin'] : null,
+            'status_kk' => $this->status_kk ?: null,
         ];
 
-        // Handle rumah langsung ke penduduk
-        if ($this->hasRumah) {
+        // Handle rumah KK
+        if ($this->hasRumah && $this->isKepalaKeluarga) {
             $rumahData = [
+                'kode_rumah' => $this->kodeRumah ?: null,
                 'rt_id' => $this->rumahRtId,
                 'kategori_rumah' => $this->kategoriRumah ?: null,
+                'kategori_rtlh' => $this->kategoriRtlh ?: null,
                 'teraliri_listrik' => $this->teraliriListrik,
                 'punya_mck' => $this->punyaMckRumah,
                 'posisi' => $this->posisi ?: null,
             ];
 
-            if ($this->penduduk && $this->penduduk->rumah_id) {
-                // Update existing rumah
-                Rumah::where('id', $this->penduduk->rumah_id)->update($rumahData);
-                $data['rumah_id'] = $this->penduduk->rumah_id;
+            $existingRumahId = $this->penduduk?->kartuKeluarga?->rumah_id;
+            if ($existingRumahId) {
+                Rumah::where('id', $existingRumahId)->update($rumahData);
             } else {
-                // Create new rumah
-                $rumah = Rumah::create($rumahData);
-                $data['rumah_id'] = $rumah->id;
+                $rumahBaru = Rumah::create($rumahData);
+                if ($kkId) {
+                    KartuKeluarga::where('id', $kkId)->update(['rumah_id' => $rumahBaru->id]);
+                }
             }
-        } else {
+        }
+
+        // Handle rumah individu
+        if ($this->hasRumahIndividu) {
+            $rumahIndividuData = [
+                'kode_rumah' => $this->kodeRumahIndividu ?: null,
+                'rt_id' => $this->rumahIndividuRtId,
+                'kategori_rumah' => $this->kategoriRumahIndividu ?: null,
+                'kategori_rtlh' => $this->kategoriRtlhIndividu ?: null,
+                'teraliri_listrik' => $this->teraliriListrikIndividu,
+                'punya_mck' => $this->punyaMckIndividu,
+                'posisi' => $this->posisiIndividu ?: null,
+            ];
+
+            if ($this->penduduk?->rumah_id) {
+                Rumah::where('id', $this->penduduk->rumah_id)->update($rumahIndividuData);
+            } else {
+                $rumahBaru = Rumah::create($rumahIndividuData);
+                $data['rumah_id'] = $rumahBaru->id;
+            }
+        } elseif (!$this->hasRumahIndividu && $this->penduduk?->rumah_id) {
             $data['rumah_id'] = null;
         }
 
         if ($this->penduduk) {
             $this->penduduk->update($data);
+            $this->penduduk->refresh();
 
             if ($this->isKepalaKeluarga && $kkId) {
                 KartuKeluarga::where('id', $kkId)->update(['kepala_keluarga_id' => $this->penduduk->id]);
             }
 
             session()->flash('message', 'Data penduduk berhasil diperbarui.');
+            return redirect()->route('penduduk.show', $this->penduduk);
         } else {
             $penduduk = Penduduk::create($data);
 
@@ -302,9 +382,8 @@ class Form extends Component
             }
 
             session()->flash('message', 'Data penduduk berhasil ditambahkan.');
+            return redirect()->route('penduduk.show', $penduduk);
         }
-
-        return redirect()->route('penduduk.index');
     }
 
     public function render()

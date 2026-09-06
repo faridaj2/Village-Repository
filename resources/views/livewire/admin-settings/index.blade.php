@@ -6,12 +6,7 @@
         </div>
     </x-slot>
 
-    @if (session()->has('message'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-2xl">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-sm font-medium">{{ session('message') }}</span>
-        </div>
-    @endif
+    <x-flash-toast />
 
     <!-- Pengaturan Umum -->
     <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -49,6 +44,87 @@
             <div class="flex justify-end">
                 <button wire:click="saveGeneral" class="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition-all">Simpan</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Identitas Desa & Tanda Tangan -->
+    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            </div>
+            <div>
+                <h3 class="text-base font-semibold text-gray-900">Identitas Desa & Tanda Tangan</h3>
+                <p class="text-xs text-gray-500">Data ini dipakai di template surat (@{{desa.nama}}, @{{desa.kecamatan}}, @{{ttd.nama}}, dll.)</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Desa</label>
+                <input wire:model="namaDesa" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Kecamatan</label>
+                <input wire:model="kecamatan" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Kabupaten</label>
+                <input wire:model="kabupaten" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Provinsi</label>
+                <input wire:model="provinsi" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Alamat Kantor Desa</label>
+                <input wire:model="alamatDesa" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Kode Pos</label>
+                <input wire:model="kodePos" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Telepon</label>
+                <input wire:model="telepon" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+            <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                <input wire:model="email" type="text" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 pt-5 border-t border-gray-100">
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-sm font-semibold text-gray-900 mb-3">✍️ Tanda Tangan Kepala Desa</p>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Nama</label>
+                        <input wire:model="ttdKadesNama" type="text" class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Jabatan</label>
+                        <input wire:model="ttdKadesJabatan" type="text" class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-xl">
+                <p class="text-sm font-semibold text-gray-900 mb-3">✍️ Tanda Tangan Sekretaris Desa</p>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Nama</label>
+                        <input wire:model="ttdSekdesNama" type="text" class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Jabatan</label>
+                        <input wire:model="ttdSekdesJabatan" type="text" class="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-5">
+            <button wire:click="saveIdentitasSurat" class="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl hover:from-emerald-600 hover:to-teal-700 shadow-lg shadow-emerald-500/25 transition-all">Simpan Identitas & TTD</button>
         </div>
     </div>
 

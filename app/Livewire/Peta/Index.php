@@ -133,16 +133,19 @@ class Index extends Component
     {
         $this->filterRt = '';
         $this->loadData();
+        $this->dispatch('map-data', rumahs: $this->rumahs, fasilitas: $this->fasilitas, boundaries: $this->boundaries);
     }
 
     public function updatedFilterRt()
     {
         $this->loadData();
+        $this->dispatch('map-data', rumahs: $this->rumahs, fasilitas: $this->fasilitas, boundaries: $this->boundaries);
     }
 
     public function updatedFilterRtlh()
     {
         $this->loadData();
+        $this->dispatch('map-data', rumahs: $this->rumahs, fasilitas: $this->fasilitas, boundaries: $this->boundaries);
     }
 
     public function render()

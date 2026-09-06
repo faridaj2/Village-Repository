@@ -8,16 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('admin_settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('key')->unique();
-            $table->json('value')->nullable();
-            $table->timestamps();
+        Schema::table('struktur_pemerintahans', function (Blueprint $table) {
+            $table->dropColumn('urutan');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('admin_settings');
+        Schema::table('struktur_pemerintahans', function (Blueprint $table) {
+            $table->integer('urutan')->default(0);
+        });
     }
 };

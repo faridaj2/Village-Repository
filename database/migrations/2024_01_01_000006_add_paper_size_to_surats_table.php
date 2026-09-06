@@ -8,16 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('dusuns', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->text('boundary_geojson')->nullable();
-            $table->timestamps();
+        Schema::table('surats', function (Blueprint $table) {
+            $table->string('paper_size', 10)->default('a4')->after('status');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('dusuns');
+        Schema::table('surats', function (Blueprint $table) {
+            $table->dropColumn('paper_size');
+        });
     }
 };

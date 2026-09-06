@@ -22,10 +22,11 @@ class Penduduk extends Model
         'pekerjaan',
         'status_kawin',
         'kartu_keluarga_id',
-        'rumah_id',
         'status_khusus',
+        'status_kk',
         'status',
         'jenis_penduduk',
+        'rumah_id',
     ];
 
     protected function casts(): array
@@ -41,11 +42,6 @@ class Penduduk extends Model
         return $this->belongsTo(KartuKeluarga::class);
     }
 
-    public function rumah(): BelongsTo
-    {
-        return $this->belongsTo(Rumah::class);
-    }
-
     public function mutasis(): HasMany
     {
         return $this->hasMany(MutasiPenduduk::class);
@@ -54,6 +50,11 @@ class Penduduk extends Model
     public function surats(): HasMany
     {
         return $this->hasMany(Surat::class);
+    }
+
+    public function rumah(): BelongsTo
+    {
+        return $this->belongsTo(Rumah::class);
     }
 
     public function tanpaKk(): bool

@@ -6,12 +6,7 @@
         </div>
     </x-slot>
 
-    @if (session()->has('message'))
-        <div class="mb-6 flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-2xl">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-sm font-medium">{{ session('message') }}</span>
-        </div>
-    @endif
+    <x-flash-toast />
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <!-- Filter Bar -->
@@ -60,7 +55,14 @@
         </div>
 
         <!-- Map -->
-        <div x-data="petaDesa()" x-init="$nextTick(() => init())" style="height: 600px;">
+        <script>
+            window.petaData = {
+                rumahs: @js($rumahs),
+                fasilitas: @js($fasilitas),
+                boundaries: @js($boundaries)
+            };
+        </script>
+        <div wire:ignore x-data="petaDesa()" x-init="$nextTick(() => init())" x-on:map-data.window="window.petaData = $event.detail; $nextTick(() => renderAll())" style="height: 600px;">
             <div x-ref="map" class="w-full h-full"></div>
         </div>
     </div>
@@ -95,11 +97,7 @@
                         this.renderAll();
                     }, 300);
 
-                    Livewire.hook('commit', ({ component, succeed }) => {
-                        succeed(() => {
-                            setTimeout(() => this.renderAll(), 100);
-                        });
-                    });
+
                 },
 
                 renderAll() {
@@ -116,7 +114,7 @@
                 },
 
                 renderBoundaries() {
-                    const boundaries = @json($boundaries);
+                    const boundaries = window.petaData.boundaries;
                     boundaries.forEach(b => {
                         if (!b.geojson) return;
                         try {
@@ -140,9 +138,7 @@
                 },
 
                 renderMarkers() {
-                    const rumahs = @json($rumahs);
-                    const fasilitas = @json($fasilitas);
-
+                    const rumahs = window.petaData.rumahs;
                     rumahs.forEach(r => {
                         if (!r.lat || !r.lng) return;
                         const color = r.rtlh === 'layak' ? '#10b981' : '#ef4444';
@@ -164,6 +160,7 @@
                         this.markers.push(marker);
                     });
 
+                    const fasilitas = window.petaData.fasilitas;
                     fasilitas.forEach(f => {
                         if (!f.lat || !f.lng) return;
                         const marker = L.circleMarker([f.lat, f.lng], {

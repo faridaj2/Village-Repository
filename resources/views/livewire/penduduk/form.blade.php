@@ -93,6 +93,15 @@
                         </select>
                         <p class="text-xs text-gray-400 mt-1">Pendatang = sudah menetap, belum urus pindah KK/KTP</p>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">Status dalam KK</label>
+                        <select wire:model="status_kk" class="w-full px-4 py-2.5 bg-gray-50 border-0 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                            <option value="">Pilih Status</option>
+                            <option value="suami">Suami</option>
+                            <option value="istri">Istri</option>
+                            <option value="anak">Anak</option>
+                        </select>
+                    </div>
                     <div class="sm:col-span-2">
                         <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                             <input type="checkbox" wire:model="miskin" class="w-4 h-4 text-red-600 bg-white border-gray-300 rounded focus:ring-red-500">
@@ -219,7 +228,7 @@
                     <div class="w-6 h-6 bg-amber-100 rounded-md flex items-center justify-center">
                         <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                     </div>
-                    Rumah
+                    Rumah yang terhubung KK
                 </h3>
 
                 <!-- Toggle Punya Rumah -->
@@ -231,14 +240,18 @@
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>
                         <div>
-                            <span class="text-sm font-medium text-gray-900">Punya Rumah</span>
-                            <p class="text-xs text-gray-500">Centang jika penduduk memiliki rumah tinggal</p>
+                            <span class="text-sm font-medium text-gray-900">Punya Rumah KK</span>
+                            <p class="text-xs text-gray-500">Centang jika kepala keluarga memiliki rumah untuk KK ini</p>
                         </div>
                     </label>
                 </div>
 
                 @if ($hasRumah)
                     <div class="p-4 bg-amber-50 border border-amber-100 rounded-xl space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-amber-800 mb-1.5">Kode Rumah</label>
+                            <input wire:model="kodeRumah" type="text" placeholder="Contoh: R001" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
+                        </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-sm font-medium text-amber-800 mb-1.5">RW</label>
@@ -261,14 +274,24 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-amber-800 mb-1.5">Kategori Rumah</label>
-                            <select wire:model="kategoriRumah" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
-                                <option value="">Pilih Kategori</option>
-                                <option value="permanen">Permanen</option>
-                                <option value="semi_permanen">Semi Permanen</option>
-                                <option value="darurat">Darurat</option>
-                            </select>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-amber-800 mb-1.5">Kategori Rumah</label>
+                                <select wire:model="kategoriRumah" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="permanen">Permanen</option>
+                                    <option value="semi_permanen">Semi Permanen</option>
+                                    <option value="darurat">Darurat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-amber-800 mb-1.5">Kategori RTLH</label>
+                                <select wire:model="kategoriRtlh" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
+                                    <option value="">Pilih RTLH</option>
+                                    <option value="layak">Layak Huni</option>
+                                    <option value="tidak_layak">Tidak Layak Huni</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="flex flex-col gap-3">
@@ -291,6 +314,104 @@
                         <div>
                             <label class="block text-sm font-medium text-amber-800 mb-1.5">Posisi <span class="text-amber-400 font-normal">(opsional)</span></label>
                             <input wire:model="posisi" type="text" placeholder="-3.4103139, 126.9683868" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Rumah Individu (Tanpa KK) -->
+            <div>
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <div class="w-6 h-6 bg-blue-100 rounded-md flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    </div>
+                    Rumah Individu
+                </h3>
+                <p class="text-xs text-gray-500 mb-4">Rumah milik pribadi penduduk, tidak terikat KK</p>
+
+                <!-- Toggle Rumah Individu -->
+                <div class="mb-5">
+                    <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="relative">
+                            <input type="checkbox" wire:model.live="hasRumahIndividu" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
+                            <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
+                        </div>
+                        <div>
+                            <span class="text-sm font-medium text-gray-900">Punya Rumah Individu</span>
+                            <p class="text-xs text-gray-500">Centang jika penduduk memiliki rumah sendiri</p>
+                        </div>
+                    </label>
+                </div>
+
+                @if ($hasRumahIndividu)
+                    <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-blue-800 mb-1.5">Kode Rumah</label>
+                            <input wire:model="kodeRumahIndividu" type="text" placeholder="Contoh: R001" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-blue-800 mb-1.5">RW</label>
+                                <select wire:model.live="rumahIndividuRwId" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">
+                                    <option value="">Pilih RW</option>
+                                    @foreach ($rwList as $rw)
+                                        <option value="{{ $rw->id }}">{{ $rw->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-blue-800 mb-1.5">RT</label>
+                                <select wire:model="rumahIndividuRtId" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all" {{ !$rumahIndividuRwId ? 'disabled' : '' }}>
+                                    <option value="">{{ $rumahIndividuRwId ? 'Pilih RT' : 'Pilih RW dulu' }}</option>
+                                    @foreach ($rumahIndividuRtList as $rt)
+                                        <option value="{{ $rt->id }}">{{ $rt->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @error('rumahIndividuRtId') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-blue-800 mb-1.5">Kategori Rumah</label>
+                                <select wire:model="kategoriRumahIndividu" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="permanen">Permanen</option>
+                                    <option value="semi_permanen">Semi Permanen</option>
+                                    <option value="darurat">Darurat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-blue-800 mb-1.5">Kategori RTLH</label>
+                                <select wire:model="kategoriRtlhIndividu" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">
+                                    <option value="">Pilih RTLH</option>
+                                    <option value="layak">Layak Huni</option>
+                                    <option value="tidak_layak">Tidak Layak Huni</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-blue-100/50 transition-colors border border-blue-200">
+                                <input type="checkbox" wire:model="teraliriListrikIndividu" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                                <div>
+                                    <span class="text-sm font-medium text-gray-900">Teraliri Listrik</span>
+                                    <p class="text-xs text-gray-500">Rumah memiliki aliran listrik</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-blue-100/50 transition-colors border border-blue-200">
+                                <input type="checkbox" wire:model="punyaMckIndividu" class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500">
+                                <div>
+                                    <span class="text-sm font-medium text-gray-900">Punya MCK</span>
+                                    <p class="text-xs text-gray-500">Rumah memiliki mandi, cuci, kakus</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-blue-800 mb-1.5">Posisi <span class="text-blue-400 font-normal">(opsional)</span></label>
+                            <input wire:model="posisiIndividu" type="text" placeholder="-3.4103139, 126.9683868" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">
                         </div>
                     </div>
                 @endif

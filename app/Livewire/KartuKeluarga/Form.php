@@ -31,9 +31,9 @@ class Form extends Component
     public $pendudukList = [];
     public $rumahList = [];
 
-    public function mount($kartuKeluarga = null)
+    public function mount(KartuKeluarga|string|int|null $kartuKeluarga = null)
     {
-        $this->kartuKeluarga = $kartuKeluarga ? KartuKeluarga::find($kartuKeluarga) : null;
+        $this->kartuKeluarga = $kartuKeluarga instanceof KartuKeluarga ? $kartuKeluarga : ($kartuKeluarga ? KartuKeluarga::find($kartuKeluarga) : null);
         $this->pendudukList = Penduduk::where('status', 'aktif')->orderBy('nama')->get();
         $this->rumahList = Rumah::orderBy('kode_rumah')->get();
 

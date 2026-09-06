@@ -17,7 +17,7 @@ class Index extends Component
     public $jabatan = '';
     public $nama = '';
     public $foto = '';
-    public $urutan = 0;
+
     public $parentId = '';
     public $showForm = false;
 
@@ -28,7 +28,7 @@ class Index extends Component
 
     public function loadData()
     {
-        $this->strukturList = StrukturPemerintahan::orderBy('urutan')->orderBy('id')->get();
+        $this->strukturList = StrukturPemerintahan::orderBy('id')->get();
     }
 
     public function openForm()
@@ -44,7 +44,7 @@ class Index extends Component
         $this->jabatan = $item->jabatan;
         $this->nama = $item->nama;
         $this->foto = $item->foto ?? '';
-        $this->urutan = $item->urutan;
+
         $this->parentId = $item->parent_id ?? '';
         $this->showForm = true;
     }
@@ -60,7 +60,7 @@ class Index extends Component
             'jabatan' => $this->jabatan,
             'nama' => $this->nama,
             'foto' => $this->foto ?: null,
-            'urutan' => $this->urutan,
+
             'parent_id' => $this->parentId ?: null,
         ];
 
@@ -89,7 +89,7 @@ class Index extends Component
         $this->jabatan = '';
         $this->nama = '';
         $this->foto = '';
-        $this->urutan = 0;
+
         $this->parentId = '';
         $this->showForm = false;
     }

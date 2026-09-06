@@ -15,7 +15,6 @@ class FasilitasUmum extends Model
         'jenis',
         'rt_id',
         'posisi',
-        'foto',
         'keterangan',
     ];
 

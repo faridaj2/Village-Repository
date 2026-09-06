@@ -15,7 +15,6 @@ class StrukturPemerintahan extends Model
         'jabatan',
         'nama',
         'foto',
-        'urutan',
         'parent_id',
     ];
 
@@ -26,6 +25,6 @@ class StrukturPemerintahan extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(StrukturPemerintahan::class, 'parent_id')->orderBy('urutan');
+        return $this->hasMany(StrukturPemerintahan::class, 'parent_id');
     }
 }
