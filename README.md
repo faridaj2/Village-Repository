@@ -1,58 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIDesa - Sistem Informasi Desa Waeleman
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web untuk pengelolaan data desa, penduduk, rumah, fasilitas, dan layanan surat menyurat digital.
 
-## About Laravel
+Dibangun dengan Laravel 13, Livewire 3, Tailwind CSS, dan Vite.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Dashboard statistik desa
+- Peta interaktif wilayah RW/RT, rumah, dan fasilitas umum
+- Manajemen Penduduk (CRUD, pencarian, mutasi)
+- Manajemen Rumah
+- Kartu Keluarga (KK)
+- Fasilitas Umum
+- Surat Menyurat (template dinamis, pengajuan, tracking, draft, finalisasi, cetak, PDF A4/F4, log pencetakan)
+- Pengumuman desa
+- Pengaturan identitas desa
+- Manajemen pengguna (Admin dan Operator)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalasi Lokal
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prasyarat
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP >= 8.3
+- Composer
+- Node.js >= 18
+- MySQL / MariaDB
 
-## Agentic Development
+### Langkah-langkah
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Clone repository
 
-```bash
-composer require laravel/boost --dev
+git clone git@github.com:faridaj2/Village-Repository.git
+cd Village-Repository
 
-php artisan boost:install
-```
+2. Install dependensi PHP
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+composer install
 
-## Contributing
+3. Salin file environment
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+cp .env.example .env
 
-## Code of Conduct
+4. Generate key aplikasi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan key:generate
 
-## Security Vulnerabilities
+5. Atur database di .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=desa_waeleman
+DB_USERNAME=root
+DB_PASSWORD=
 
-## License
+6. Jalankan migrasi dan seeder
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+php artisan migrate --seed
+
+7. Install dependensi frontend dan build asset
+
+npm install
+npm run build
+
+8. Jalankan server lokal
+
+php artisan serve
+
+Aplikasi dapat diakses di http://127.0.0.1:8000
+
+---
+
+## Akun Default
+
+| Role     | Email               | Password   |
+|----------|---------------------|------------|
+| Admin    | admin@sidesa.id     | password   |
+| Operator | operator@sidesa.id  | password   |
+
+Segera ubah password setelah login pertama.
+
+---
+
+## Deploy ke Hosting
+
+1. Upload seluruh file proyek ke hosting (kecuali vendor, node_modules, .env, dan isi storage/logs, storage/framework/cache).
+2. Buat database baru dan catat kredensialnya.
+3. Salin .env.example menjadi .env, lalu isi APP_URL, kredensial database, APP_ENV=production, dan APP_DEBUG=false.
+4. Jalankan perintah berikut di terminal hosting:
+
+composer install --no-dev --optimize-autoloader
+php artisan key:generate
+php artisan migrate --force
+php artisan db:seed --force
+
+5. Install dan build aset frontend:
+
+npm install
+npm run build
+
+6. Beri permission tulis:
+
+chmod -R 775 storage bootstrap/cache
+
+7. Arahkan domain ke folder public.
+
+---
+
+## Migrasi Database
+
+Migrasi sudah dirapikan agar bisa langsung dijalankan di hosting:
+
+php artisan migrate --force
+
+Jika perlu rollback, foreign key checks dinonaktifkan otomatis agar tidak terjadi error circular reference.
+
+---
+
+## Lisensi
+
+Proyek ini menggunakan MIT License.
