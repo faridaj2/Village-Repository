@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'SIDESA') }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,13 +20,9 @@
             <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'" class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white border-r border-gray-200/80 transition-all duration-300" :style="sidebarCollapsed ? 'width: 80px' : 'width: 260px'">
                 <!-- Logo -->
                 <div class="flex items-center h-16 px-5 border-b border-gray-100">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-                        <div class="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
-                        </div>
-                        <span x-show="!sidebarCollapsed" x-transition class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">SIDESA</span>
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <img src="{{ asset('logo-tagline.png') }}" alt="SIDESA" class="h-9 w-auto" x-show="!sidebarCollapsed">
+                        <img src="{{ asset('icon.png') }}" alt="SIDESA" class="h-9 w-auto" x-show="sidebarCollapsed" x-cloak>
                     </a>
                     <button @click="sidebarOpen = false" class="lg:hidden ml-auto p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>

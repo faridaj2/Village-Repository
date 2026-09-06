@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>SIDESA — Sistem Informasi Desa</title>
+        <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -14,10 +15,7 @@
         <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 z-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
                 <a href="/" class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                    </div>
-                    <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">SIDESA</span>
+                    <img src="{{ asset('logo-tagline.png') }}" alt="SIDESA" class="h-9 w-auto">
                 </a>
                 <div class="hidden sm:flex items-center gap-6">
                     <a href="#layanan" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Layanan</a>
