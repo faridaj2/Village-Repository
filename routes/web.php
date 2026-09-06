@@ -30,6 +30,11 @@ use Illuminate\Support\Facades\Storage;
 
 Route::view('/', 'welcome');
 
+// Public routes
+Route::get('surat/ajukan', \App\Livewire\Surat\Ajukan::class)->name('surat.ajukan');
+Route::get('surat/tracking', \App\Livewire\Surat\Tracking::class)->name('surat.tracking');
+Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', Statistik::class)->name('dashboard');
     Route::view('profile', 'profile')->name('profile');
@@ -94,10 +99,5 @@ Route::middleware(['auth'])->group(function () {
     // User Management
     Route::get('user', UserIndex::class)->name('user.index');
 });
-
-// Public routes
-Route::get('surat/ajukan', \App\Livewire\Surat\Ajukan::class)->name('surat.ajukan');
-Route::get('surat/tracking', \App\Livewire\Surat\Tracking::class)->name('surat.tracking');
-Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');
 
 require __DIR__.'/auth.php';
