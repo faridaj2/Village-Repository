@@ -11,8 +11,6 @@
             </a>
             <nav class="flex gap-4">
                 <a href="{{ route('pengumuman.publik') }}" class="text-sm text-blue-500 font-medium">Pengumuman</a>
-                <a href="{{ route('surat.ajukan') }}" class="text-sm text-gray-500 hover:text-gray-700">Ajukan Surat</a>
-                <a href="{{ route('surat.tracking') }}" class="text-sm text-gray-500 hover:text-gray-700">Tracking Surat</a>
             </nav>
         </div>
     </header>

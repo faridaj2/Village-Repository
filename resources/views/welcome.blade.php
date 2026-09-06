@@ -20,8 +20,6 @@
                 <div class="hidden sm:flex items-center gap-6">
                     <a href="#layanan" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Layanan</a>
                     <a href="#pengumuman" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Pengumuman</a>
-                    <a href="{{ route('surat.ajukan') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Ajukan Surat</a>
-                    <a href="{{ route('surat.tracking') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Tracking</a>
                 </div>
                 @auth
                     <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-700 transition-colors">Dashboard</a>
@@ -50,14 +48,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
 
                 <!-- CTA -->
-                <div class="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 flex flex-col sm:flex-row items-center gap-3">
-                    <a href="{{ route('surat.ajukan') }}" class="px-8 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg transition-all">
-                        Ajukan Surat Online
-                    </a>
-                    <a href="{{ route('surat.tracking') }}" class="px-8 py-3.5 text-sm font-semibold text-white bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl hover:bg-white/30 transition-all">
-                        Cek Status Surat
-                    </a>
-                </div>
+                <!-- CTA surat dihapus -->
 
                 <!-- Dots -->
                 <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2" id="heroDots">
@@ -109,21 +100,7 @@
                     <h2 class="text-2xl sm:text-3xl font-bold mb-3">Layanan Publik</h2>
                     <p class="text-gray-500">Akses layanan desa secara online</p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <a href="{{ route('surat.ajukan') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-500/5 transition-all">
-                        <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition-colors">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                        </div>
-                        <h3 class="text-base font-semibold mb-1">Ajukan Surat</h3>
-                        <p class="text-sm text-gray-500">Domisili, tidak mampu, usaha, pengantar KTP/KK</p>
-                    </a>
-                    <a href="{{ route('surat.tracking') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all">
-                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-100 transition-colors">
-                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                        </div>
-                        <h3 class="text-base font-semibold mb-1">Tracking Surat</h3>
-                        <p class="text-sm text-gray-500">Pantau status pengajuan surat Anda</p>
-                    </a>
+                <div class="max-w-md mx-auto">
                     <a href="{{ route('pengumuman.publik') }}" class="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-500/5 transition-all">
                         <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-amber-100 transition-colors">
                             <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
