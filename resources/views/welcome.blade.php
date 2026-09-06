@@ -25,7 +25,11 @@
                     <a href="{{ route('surat.ajukan') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Ajukan Surat</a>
                     <a href="{{ route('surat.tracking') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Tracking</a>
                 </div>
-                <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition-all">Login</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl hover:from-emerald-600 hover:to-teal-700 shadow-lg shadow-emerald-500/25 transition-all">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition-all">Login</a>
+                @endauth
             </div>
         </nav>
 
