@@ -340,6 +340,8 @@ class Form extends Component
                     KartuKeluarga::where('id', $kkId)->update(['rumah_id' => $rumahBaru->id]);
                 }
             }
+        } elseif (!$this->hasRumah && $this->isKepalaKeluarga && $this->penduduk?->kartuKeluarga?->rumah_id) {
+            KartuKeluarga::where('id', $this->penduduk->kartu_keluarga_id)->update(['rumah_id' => null]);
         }
 
         // Handle rumah individu
