@@ -120,27 +120,29 @@
                                 <span class="text-gray-400 mx-1">/</span>
                                 <span>{{ $totalJiwa }} jiwa</span>
                             </td>
-                            <td class="py-3.5 px-5 text-sm">
-                                @php
-                                    $milikLabels = [];
-                                    foreach ($rumah->kartuKeluargas as $kk) {
-                                        if ($kk->kepalaKeluarga) {
-                                            $milikLabels[] = ['name' => $kk->kepalaKeluarga->nama, 'type' => 'KK'];
-                                        }
-                                    }
-                                    foreach ($rumah->penduduks as $p) {
-                                        $milikLabels[] = ['name' => $p->nama, 'type' => 'Individu'];
-                                    }
-                                @endphp
-                                @forelse ($milikLabels as $milik)
-                                    <div class="flex items-center gap-1.5 mb-1 last:mb-0">
-                                        <span class="text-gray-900 font-medium">{{ $milik['name'] }}</span>
-                                        <span class="inline-flex items-center px-1.5 py-0.5 {{ $milik['type'] === 'KK' ? 'bg-indigo-50 text-indigo-700' : 'bg-blue-50 text-blue-700' }} text-[10px] font-semibold rounded">{{ $milik['type'] }}</span>
-                                    </div>
-                                @empty
-                                    <span class="text-gray-400">-</span>
-                                @endforelse
-                            </td>
+                                                       <td class="py-3.5 px-5 text-sm">
+                                                           @php
+                                                               $milikLabels = [];
+                                                               foreach ($rumah->kartuKeluargas as $kk) {
+                                                                   $anggota = $kk->anggota;
+                                                                   foreach ($anggota as $p) {
+                                                                       $isKepala = ($p->id === $kk->kepala_keluarga_id);
+                                                                       $milikLabels[] = [
+                                                                           'name' => $p->nama,
+                                                                           'type' => $isKepala ? 'Kepala KK' : 'Anggota KK'
+                                                                       ];
+                                                                   }
+                                                               }
+                                                           @endphp
+                                                           @forelse ($milikLabels as $milik)
+                                                               <div class="flex items-center gap-1.5 mb-1 last:mb-0">
+                                                                   <span class="text-gray-900 font-medium">{{ $milik['name'] }}</span>
+                                                                   <span class="inline-flex items-center px-1.5 py-0.5 {{ $milik['type'] === 'Kepala KK' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700' }} text-[10px] font-semibold rounded">{{ $milik['type'] }}</span>
+                                                               </div>
+                                                           @empty
+                                                               <span class="text-gray-400">-</span>
+                                                           @endforelse
+                                                       </td>
                             <td class="py-3.5 px-5 text-right">
                                 <div class="flex items-center justify-end gap-1">
                                     <a href="{{ route('rumah.edit', $rumah) }}" class="p-2 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 transition-colors" title="Edit">
