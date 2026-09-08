@@ -28,7 +28,13 @@ class Statistik extends Component
     {
         $this->totalPenduduk = Penduduk::where('status', 'aktif')->count();
         $this->totalKk = KartuKeluarga::count();
-        $this->totalRumah = Rumah::count();
+        $this->totalRumah = Rumah::where(function ($query) {
+            $query->whereIn('id', function ($subQuery) {
+                $subQuery->select('rumah_id')->from('kartu_keluargas')->whereNotNull('rumah_id');
+            })->orWhereIn('id', function ($subQuery) {
+                $subQuery->select('rumah_id')->from('penduduks')->whereNotNull('rumah_id');
+            });
+        })->count();
         $this->suratMenunggu = Surat::whereIn('status', ['diajukan', 'diproses'])->count();
 
         $this->pendudukPerGender = Penduduk::where('status', 'aktif')
