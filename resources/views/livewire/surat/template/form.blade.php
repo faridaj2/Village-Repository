@@ -63,7 +63,7 @@
         </div>
 
         {{-- Editor / Preview dengan toggle --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
             {{-- Header toggle --}}
             <div class="flex flex-wrap items-center gap-3 px-5 py-4 border-b border-gray-100">
                 <div class="inline-flex items-center bg-gray-100 rounded-2xl p-1.5 shadow-inner">
@@ -102,7 +102,7 @@
 
                 {{-- Preview --}}
                 <div x-show="showPreview" x-cloak>
-                    <div class="bg-gray-100 rounded-xl p-4 overflow-auto" style="max-height: 70vh;">
+                    <div class="bg-gray-100 rounded-xl p-4 sm:p-6">
                         <div class="bg-white shadow-md mx-auto"
                              style="width: 100%; max-width: 210mm; min-height: 297mm; padding: 20mm; box-sizing: border-box; color: #000; line-height: 1.55; font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
                             <div x-show="previewHtml && previewHtml.trim() !== ''" x-html="previewHtml"></div>
