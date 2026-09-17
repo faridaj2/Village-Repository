@@ -37,6 +37,19 @@ Route::get('/', [LandingController::class, 'index'])->name('home');
 // Public routes
 Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');
 
+// Deploy helper — hapus setelah selesai digunakan
+Route::get('deploy-flush-{token}', function (string $token) {
+    abort_unless($token === 'wlm-9x7k2p', 404);
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    if (function_exists('opcache_reset')) { @opcache_reset(); }
+    return response('OK — cache flushed at '.now()->toDateTimeString(), 200)
+        ->header('Content-Type', 'text/plain');
+})->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', Statistik::class)->name('dashboard');
     Route::view('profile', 'profile')->name('profile');
