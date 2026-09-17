@@ -171,11 +171,11 @@
         </section>
 
         {{-- Fitur --}}
-        <section id="fitur" class="pt-40 sm:pt-48 pb-24 px-4 sm:px-6">
+        <section id="fitur" class="pt-48 sm:pt-60 pb-32 px-4 sm:px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16 max-w-2xl mx-auto">
+                <div class="text-center mb-20 max-w-2xl mx-auto">
                     <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Fitur Unggulan</span>
-                    <h2 class="text-3xl sm:text-5xl font-black mt-4 mb-5 tracking-tight leading-tight">Semua Kebutuhan<br>Administrasi Desa</h2>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-5 mb-6 tracking-tight leading-tight">Semua Kebutuhan<br>Administrasi Desa</h2>
                     <p class="text-gray-500 leading-relaxed">Satu platform untuk mengelola seluruh data dan layanan administrasi desa dengan mudah.</p>
                 </div>
 
@@ -190,9 +190,9 @@
                     ];
                 @endphp
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
                     @foreach ($fiturs as $f)
-                        <div class="group relative bg-white rounded-3xl border border-gray-100 p-7 hover:border-{{ $f['color'] }}-200 hover:shadow-2xl hover:shadow-{{ $f['color'] }}-500/10 hover:-translate-y-1 transition-all duration-300">
+                        <div class="group relative bg-white rounded-3xl p-8 shadow-sm shadow-gray-200/60 hover:shadow-2xl hover:shadow-{{ $f['color'] }}-500/15 hover:-translate-y-1.5 transition-all duration-300">
                             <div class="w-14 h-14 rounded-2xl bg-{{ $f['color'] }}-50 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                                 @if($f['icon'] === 'users')
                                     <svg class="w-7 h-7 text-{{ $f['color'] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -217,9 +217,9 @@
         </section>
 
         {{-- Pengumuman --}}
-        <section id="pengumuman" class="pt-32 pb-24 px-4 sm:px-6 bg-gray-50/70">
+        <section id="pengumuman" class="pt-40 sm:pt-48 pb-32 px-4 sm:px-6 bg-gray-50/70">
             <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-16 gap-4">
                     <div>
                         <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Informasi Publik</span>
                         <h2 class="text-3xl sm:text-4xl font-black mt-3 tracking-tight">Pengumuman Terbaru</h2>
@@ -233,10 +233,10 @@
 
                 @php $pengumumans = \App\Models\Pengumuman::published()->latest('tanggal_publish')->limit(3)->get(); @endphp
                 @if ($pengumumans->count() > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
                         @foreach ($pengumumans as $i => $item)
                             <a href="{{ route('pengumuman.publik') }}#pengumuman-{{ $item->id }}"
-                               class="group relative bg-white rounded-3xl border border-gray-100 p-7 hover:shadow-2xl hover:border-indigo-100 hover:-translate-y-1 transition-all duration-300 block">
+                               class="group relative bg-white rounded-3xl p-8 shadow-sm shadow-gray-200/60 hover:shadow-2xl hover:shadow-indigo-500/15 hover:-translate-y-1.5 transition-all duration-300 block">
                                 <div class="flex items-center gap-2 mb-4">
                                     @if ($item->kategori)
                                         <span class="inline-flex items-center px-2.5 py-1 bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider rounded-lg">{{ $item->kategori }}</span>
