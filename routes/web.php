@@ -36,6 +36,7 @@ Route::get('/', [LandingController::class, 'index'])->name('home');
 
 // Public routes
 Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');
+Route::get('cek-data', \App\Livewire\Publik\CekData::class)->name('cek-data');
 
 // Deploy helper — hapus setelah selesai digunakan
 Route::get('deploy-flush-{token}', function (string $token) {

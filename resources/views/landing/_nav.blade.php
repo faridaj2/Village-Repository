@@ -18,6 +18,7 @@
             <a href="#struktur" class="nav-link text-sm font-semibold">Pemerintahan</a>
             <a href="#fasilitas" class="nav-link text-sm font-semibold">Fasilitas</a>
             <a href="#pengumuman" class="nav-link text-sm font-semibold">Pengumuman</a>
+            <a href="{{ route('cek-data') }}" class="nav-link text-sm font-semibold">Cek Data</a>
             <a href="#kontak" class="nav-link text-sm font-semibold">Kontak</a>
         </nav>
 
@@ -57,6 +58,7 @@
         <a href="#fasilitas" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-900 transition-colors">Fasilitas Umum</a>
         <a href="#peta" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-900 transition-colors">Peta Desa</a>
         <a href="#pengumuman" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-900 transition-colors">Pengumuman</a>
+        <a href="{{ route('cek-data') }}" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-brand-900 bg-brand-50 hover:bg-brand-100 transition-colors">Cek Data Penduduk</a>
         <a href="#galeri" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-900 transition-colors">Galeri</a>
         <a href="#kontak" class="flex items-center gap-3 px-6 py-3.5 text-sm font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-900 transition-colors">Kontak</a>
     </nav>
