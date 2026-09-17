@@ -117,7 +117,7 @@
             </div>
 
             {{-- Dots + Scroll hint (di flow, selalu di bawah konten) --}}
-            <div class="relative z-10 pb-10 flex flex-col items-center gap-5">
+            <div class="relative z-10 pb-24 flex flex-col items-center gap-6">
                 <div class="flex gap-2 fade-up delay-300" id="heroDots">
                     @foreach ($heroSliders as $i => $slide)
                         <button onclick="heroGoTo({{ $i }})" class="hero-dot h-1.5 rounded-full transition-all duration-500 {{ $i === 0 ? 'bg-white w-10' : 'bg-white/30 w-3 hover:bg-white/60' }}"></button>
@@ -136,7 +136,7 @@
             $totalSurat = \App\Models\Surat::count();
             $totalRumah = \App\Models\Rumah::count();
         @endphp
-        <section class="relative -mt-16 z-20 px-4 sm:px-6">
+        <section class="relative -mt-20 z-20 px-4 sm:px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="bg-white rounded-3xl shadow-2xl shadow-gray-900/10 border border-gray-100 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                     @php
@@ -171,7 +171,7 @@
         </section>
 
         {{-- Fitur --}}
-        <section id="fitur" class="py-24 px-4 sm:px-6">
+        <section id="fitur" class="pt-28 pb-24 px-4 sm:px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16 max-w-2xl mx-auto">
                     <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Fitur Unggulan</span>
