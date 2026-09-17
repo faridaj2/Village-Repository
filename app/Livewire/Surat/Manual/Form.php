@@ -57,11 +57,6 @@ class Form extends Component
         $this->html .= '{{' . $var . '}}';
     }
 
-    public function updatedPendudukSearch()
-    {
-        // Placeholder: akan dimuat di render()
-    }
-
     public function selectPenduduk($id)
     {
         $this->selectedPendudukId = $id;

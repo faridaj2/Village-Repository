@@ -107,7 +107,7 @@
 
                 {{-- Editor --}}
                 <div x-show="!showPreview">
-                    <textarea x-model="htmlLocal" rows="20" placeholder="Tulis HTML surat di sini..." class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all resize-y" style="min-height: 400px;"></textarea>
+                    <textarea x-model="htmlLocal" @input.debounce.600ms="syncToServer()" rows="20" placeholder="Tulis HTML surat di sini..." class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all resize-y" style="min-height: 400px;"></textarea>
                 </div>
             </div>
         </div>
@@ -160,10 +160,12 @@
 
                 insertBlock(code) {
                     this.htmlLocal += code;
+                    this.syncToServer();
                 },
 
                 insertVariable(varName) {
                     this.htmlLocal += '{' + '{' + varName + '}' + '}';
+                    this.syncToServer();
                 },
 
                 syncToServer(refresh = false) {
@@ -209,8 +211,6 @@
 
                         el.removeAttribute('contenteditable');
                         let newHtml = this.$refs.preview.innerHTML;
-                        // Bersihkan semua komentar HTML yang ikut tersalin
-                        newHtml = newHtml.replace(/<!--[\s\S]*?-->/g, '');
                         newHtml = newHtml.trim();
                         this.htmlLocal = newHtml;
                         this.$wire.set('html', newHtml);
