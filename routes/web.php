@@ -27,11 +27,12 @@ use App\Livewire\AdminSettings\Index as AdminSettingsIndex;
 use App\Livewire\User\Index as UserIndex;
 use App\Livewire\Dashboard\Statistik;
 use App\Livewire\Media\Index as MediaIndex;
+use App\Http\Controllers\LandingController;
 use App\Services\SuratService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
-Route::view('/', 'welcome');
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
 // Public routes
 Route::get('pengumuman/publik', \App\Livewire\Pengumuman\Publik::class)->name('pengumuman.publik');

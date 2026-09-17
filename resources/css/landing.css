@@ -1,0 +1,259 @@
+/* ============================================================
+   SIDESA Landing — Premium Emerald & Gold
+   ============================================================ */
+
+:root {
+    --brand-900: #064e3b;
+    --brand-950: #022c22;
+    --gold-500: #d4af37;
+    --gold-300: #ebd182;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+/* Gradient text: emerald → gold */
+.gradient-text {
+    background: linear-gradient(120deg, #34d399 0%, #d4af37 55%, #ebd182 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-line {
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    height: 1px;
+}
+
+/* Hero slider */
+.hero-slide {
+    transition: opacity 1600ms cubic-bezier(0.4, 0, 0.2, 1), transform 8s ease-out;
+    will-change: opacity, transform;
+}
+.hero-slide.is-active {
+    transform: scale(1.06);
+}
+
+/* Hero dots */
+.hero-dot {
+    height: 4px;
+    border-radius: 999px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.hero-dot.is-active {
+    width: 40px;
+    background: #d4af37;
+}
+.hero-dot:not(.is-active) {
+    width: 12px;
+    background: rgba(255, 255, 255, 0.3);
+}
+.hero-dot:not(.is-active):hover {
+    background: rgba(212, 175, 55, 0.6);
+    width: 20px;
+}
+
+/* Navbar state */
+#siteNav {
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+#siteNav.nav-transparent .nav-link,
+#siteNav.nav-transparent .nav-brand-text,
+#siteNav.nav-transparent .nav-brand-sub {
+    color: rgba(255, 255, 255, 0.92);
+}
+#siteNav.nav-transparent .nav-toggle-icon {
+    color: #ffffff;
+}
+#siteNav.nav-solid {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(6, 78, 59, 0.08);
+    box-shadow: 0 8px 28px -18px rgba(6, 78, 59, 0.35);
+}
+#siteNav.nav-solid .nav-link {
+    color: #334155;
+}
+#siteNav.nav-solid .nav-link:hover {
+    color: var(--brand-900);
+}
+#siteNav.nav-solid .nav-brand-text {
+    color: var(--brand-900);
+}
+#siteNav.nav-solid .nav-brand-sub {
+    color: #64748b;
+}
+#siteNav.nav-solid .nav-toggle-icon {
+    color: var(--brand-900);
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.25s ease;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 0;
+    background: var(--gold-500);
+    transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+    width: 100%;
+}
+
+/* Card hover */
+.premium-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.premium-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -24px rgba(6, 78, 59, 0.35);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal.delay-1 { transition-delay: 0.1s; }
+.reveal.delay-2 { transition-delay: 0.2s; }
+.reveal.delay-3 { transition-delay: 0.3s; }
+.reveal.delay-4 { transition-delay: 0.4s; }
+.reveal.delay-5 { transition-delay: 0.5s; }
+
+/* Fancy underline on links */
+.fancy-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s ease;
+}
+.fancy-underline:hover {
+    background-size: 100% 1px;
+}
+
+/* Gold button */
+.btn-gold {
+    background: linear-gradient(135deg, #ebd182 0%, #d4af37 45%, #b8941f 100%);
+    color: #1c1917;
+    box-shadow: 0 12px 32px -12px rgba(212, 175, 55, 0.55);
+    transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.2s ease;
+}
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -12px rgba(212, 175, 55, 0.7);
+    filter: brightness(1.04);
+}
+
+/* Structure card */
+.struct-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.struct-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 20px 44px -22px rgba(6, 78, 59, 0.35);
+}
+
+/* Media gallery item */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem;
+}
+.gallery-item img {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(2, 44, 34, 0.85) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.gallery-item:hover::after {
+    opacity: 1;
+}
+
+/* Divider ornament */
+.ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+.ornament::before,
+.ornament::after {
+    content: '';
+    height: 1px;
+    width: 42px;
+    background: linear-gradient(90deg, transparent, #d4af37);
+}
+.ornament::after {
+    background: linear-gradient(90deg, #d4af37, transparent);
+}
+
+/* Mobile drawer */
+#mobileDrawer {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+#mobileDrawer.drawer-closed {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Stat number */
+.stat-number {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-slide,
+    .premium-card,
+    .struct-card,
+    .gallery-item img,
+    .reveal {
+        transition: none !important;
+        animation: none !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+}
