@@ -132,9 +132,9 @@ class DatabaseSeeder extends Seeder
 
         // Admin Settings (info desa untuk surat)
         AdminSetting::set('nama_desa', 'Desa Waeleman');
-        AdminSetting::set('nama_kecamatan', 'Kecamatan Waeleman');
-        AdminSetting::set('nama_kabupaten', 'Kabupaten Ende');
-        AdminSetting::set('nama_provinsi', 'NTT');
+        AdminSetting::set('nama_kecamatan', 'Kecamatan Waelata');
+        AdminSetting::set('nama_kabupaten', 'Kabupaten Buru');
+        AdminSetting::set('nama_provinsi', 'Maluku');
         AdminSetting::set('alamat_desa', '');
         AdminSetting::set('kode_pos', '');
         AdminSetting::set('telepon', '');
@@ -151,7 +151,7 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Surat Keterangan Domisili',
             'slug' => 'domisili',
             'jenis_surat' => 'domisili',
-            'body_html' => '<div style="text-align: center; margin-bottom: 30px;"><h2 style="margin: 0;">SURAT KETERANGAN DOMISILI</h2><p style="margin: 5px 0 0 0;">Nomor: {{surat.nomor}}</p></div><p>Yang bertanda tangan di bawah ini, Kepala Desa Waeleman, Kecamatan Waeleman, Kabupaten Ende, dengan ini menerangkan bahwa:</p><table style="width: 100%; margin: 20px 0;"><tr><td style="width: 200px;">Nama</td><td>: {{penduduk.nama}}</td></tr><tr><td>NIK</td><td>: {{penduduk.nik}}</td></tr><tr><td>Tempat / Tgl Lahir</td><td>: {{penduduk.tempat_lahir}}, {{penduduk.tanggal_lahir_panjang}}</td></tr><tr><td>Jenis Kelamin</td><td>: {{penduduk.jenis_kelamin}}</td></tr><tr><td>Agama</td><td>: {{penduduk.agama}}</td></tr><tr><td>Pekerjaan</td><td>: {{penduduk.pekerjaan}}</td></tr><tr><td>Alamat</td><td>: RT {{rt}} / RW {{rw}}, Desa Waeleman</td></tr></table><p>Bahwa yang bersangkutan berdomisili di wilayah Desa Waeleman dan merupakan penduduk yang sah.</p><p>Surat keterangan ini dibuat untuk keperluan: <strong>{{penduduk.nama}}</strong></p><div style="margin-top: 60px; text-align: right;"><p>{{desa.nama}}, {{surat.tanggal}} {{surat.bulan}} {{surat.tahun}}</p><p style="margin-top: 50px; text-decoration: underline; font-weight: bold;">{{ttd.nama}}</p><p>{{ttd.jabatan}}</p></div>',
+            'body_html' => '<div style="text-align: center; margin-bottom: 30px;"><h2 style="margin: 0;">SURAT KETERANGAN DOMISILI</h2><p style="margin: 5px 0 0 0;">Nomor: {{surat.nomor}}</p></div><p>Yang bertanda tangan di bawah ini, Kepala Desa Waeleman, Kecamatan Waelata, Kabupaten Buru, dengan ini menerangkan bahwa:</p><table style="width: 100%; margin: 20px 0;"><tr><td style="width: 200px;">Nama</td><td>: {{penduduk.nama}}</td></tr><tr><td>NIK</td><td>: {{penduduk.nik}}</td></tr><tr><td>Tempat / Tgl Lahir</td><td>: {{penduduk.tempat_lahir}}, {{penduduk.tanggal_lahir_panjang}}</td></tr><tr><td>Jenis Kelamin</td><td>: {{penduduk.jenis_kelamin}}</td></tr><tr><td>Agama</td><td>: {{penduduk.agama}}</td></tr><tr><td>Pekerjaan</td><td>: {{penduduk.pekerjaan}}</td></tr><tr><td>Alamat</td><td>: RT {{rt}} / RW {{rw}}, Desa Waeleman</td></tr></table><p>Bahwa yang bersangkutan berdomisili di wilayah Desa Waeleman dan merupakan penduduk yang sah.</p><p>Surat keterangan ini dibuat untuk keperluan: <strong>{{penduduk.nama}}</strong></p><div style="margin-top: 60px; text-align: right;"><p>{{desa.nama}}, {{surat.tanggal}} {{surat.bulan}} {{surat.tahun}}</p><p style="margin-top: 50px; text-decoration: underline; font-weight: bold;">{{ttd.nama}}</p><p>{{ttd.jabatan}}</p></div>',
             'is_active' => true,
             'created_by' => $admin?->id,
         ]);

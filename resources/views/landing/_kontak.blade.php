@@ -15,7 +15,7 @@
 
         @php
             $kontak = \App\Models\AdminSetting::get('kontak_desa', []);
-            $alamat = $kontak['alamat'] ?? 'Kantor Desa Waeleman, Kabupaten Malaka, Nusa Tenggara Timur';
+            $alamat = $kontak['alamat'] ?? 'Kantor Desa Waeleman, Kecamatan Waelata, Kabupaten Buru, Maluku';
             $telepon = $kontak['telepon'] ?? '-';
             $email = $kontak['email'] ?? 'pemdes@waeleman.desa.id';
         @endphp

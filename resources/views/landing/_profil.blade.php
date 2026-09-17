@@ -13,7 +13,7 @@
                     Mengenal <span class="text-brand-900">{{ $desa->nama_desa ?? 'Desa Waeleman' }}</span> Lebih Dekat
                 </h2>
                 <p class="text-base text-slate-600 leading-relaxed mb-6">
-                    Desa Waeleman adalah salah satu desa di Kabupaten Malaka, Provinsi Nusa Tenggara Timur. Kami berkomitmen menghadirkan tata kelola pemerintahan desa yang bersih, transparan, dan berpihak pada kesejahteraan warga melalui pemanfaatan teknologi informasi.
+                    Desa Waeleman adalah salah satu desa di Kecamatan Waelata, Kabupaten Buru, Provinsi Maluku. Kami berkomitmen menghadirkan tata kelola pemerintahan desa yang bersih, transparan, dan berpihak pada kesejahteraan warga melalui pemanfaatan teknologi informasi.
                 </p>
                 <p class="text-base text-slate-600 leading-relaxed mb-8">
                     Melalui Sistem Informasi Desa (SIDESA), seluruh proses administrasi — mulai dari pencatatan penduduk, kartu keluarga, hingga pelayanan surat-menyurat — kini dapat dilakukan secara cepat, akurat, dan terdokumentasi dengan baik.
@@ -48,7 +48,7 @@
                         <div class="absolute bottom-0 inset-x-0 p-6 sm:p-8 text-white">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="w-2 h-2 rounded-full bg-gold-400"></span>
-                                <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-gold-300">Kabupaten Malaka</span>
+                                <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-gold-300">Kabupaten Buru · Maluku</span>
                             </div>
                             <div class="font-display text-2xl sm:text-3xl">{{ $desa->nama_desa ?? 'Desa Waeleman' }}</div>
                         </div>

@@ -12,7 +12,7 @@
                 </p>
                 <div class="flex items-center gap-3">
                     <span class="w-2 h-2 rounded-full bg-gold-500"></span>
-                    <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-gold-400">Kabupaten Malaka · NTT</span>
+                    <span class="text-[10px] font-bold tracking-[0.25em] uppercase text-gold-400">Kabupaten Buru · Maluku</span>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                 <ul class="space-y-3 text-sm">
                     <li class="flex items-start gap-2.5">
                         <svg class="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        <span>Kantor Desa Waeleman, Malaka, NTT</span>
+                        <span>Desa Waeleman, Kec. Waelata, Kab. Buru, Maluku</span>
                     </li>
                     <li class="flex items-start gap-2.5">
                         <svg class="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>

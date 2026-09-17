@@ -107,9 +107,9 @@ class Form extends Component
             ]],
             ['color' => 'purple', 'title' => 'Desa & Surat', 'vars' => [
                 ['var' => 'desa.nama', 'example' => 'Desa Waeleman'],
-                ['var' => 'desa.kecamatan', 'example' => 'Kecamatan Waeleman'],
-                ['var' => 'desa.kabupaten', 'example' => 'Kabupaten Ende'],
-                ['var' => 'desa.provinsi', 'example' => 'NTT'],
+                ['var' => 'desa.kecamatan', 'example' => 'Kecamatan Waelata'],
+                ['var' => 'desa.kabupaten', 'example' => 'Kabupaten Buru'],
+                ['var' => 'desa.provinsi', 'example' => 'Maluku'],
                 ['var' => 'surat.nomor', 'example' => '001/SRT/DOM/IX/2026'],
                 ['var' => 'surat.tanggal', 'example' => '05'],
                 ['var' => 'surat.bulan', 'example' => 'September'],

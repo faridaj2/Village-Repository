@@ -24,7 +24,7 @@
 
             <div class="inline-flex items-center gap-2.5 px-4 py-2 bg-white/8 backdrop-blur-md border border-white/15 rounded-full mb-8 animate-fade-up">
                 <span class="w-1.5 h-1.5 rounded-full bg-gold-500 animate-pulse"></span>
-                <span class="text-[11px] font-bold text-white/90 tracking-[0.2em] uppercase">Kabupaten Malaka · NTT</span>
+                <span class="text-[11px] font-bold text-white/90 tracking-[0.2em] uppercase">Kabupaten Buru · Maluku</span>
             </div>
 
             <div class="ornament mb-6 animate-fade-up">

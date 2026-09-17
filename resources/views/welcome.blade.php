@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#064e3b">
 
-    <title>SIDESA — Sistem Informasi Desa {{ $desa->nama_desa ?? 'Waeleman' }} | Kabupaten Malaka</title>
+    <title>SIDESA — Sistem Informasi Desa {{ $desa->nama_desa ?? 'Waeleman' }} | Kabupaten Buru</title>
     <meta name="description" content="Platform digital resmi Desa {{ $desa->nama_desa ?? 'Waeleman' }} untuk pelayanan administrasi, data kependudukan, kartu keluarga, surat-menyurat, dan informasi publik.">
-    <meta name="keywords" content="desa waeleman, sidaes, sistem informasi desa, kabupaten malaka, ntt, layanan desa digital, pengumuman desa">
+    <meta name="keywords" content="desa waeleman, sidaes, sistem informasi desa, kecamatan waelata, kabupaten buru, maluku, layanan desa digital, pengumuman desa">
     <meta name="author" content="Pemerintah Desa {{ $desa->nama_desa ?? 'Waeleman' }}">
 
     {{-- Open Graph --}}
@@ -43,8 +43,8 @@
         "logo": "{{ asset('logo-tagline.png') }}",
         "address": {
             "@type": "PostalAddress",
-            "addressLocality": "Kabupaten Malaka",
-            "addressRegion": "Nusa Tenggara Timur",
+            "addressLocality": "Kecamatan Waelata, Kabupaten Buru",
+            "addressRegion": "Maluku",
             "addressCountry": "ID"
         }
     }
