@@ -67,7 +67,7 @@
             ]);
         @endphp
 
-        <section class="relative min-h-screen flex items-center overflow-hidden bg-gray-950">
+        <section class="relative min-h-screen flex flex-col overflow-hidden bg-gray-950">
             {{-- Slider background --}}
             <div class="absolute inset-0" id="heroSlider">
                 @foreach ($heroSliders as $i => $slide)
@@ -86,7 +86,7 @@
             <div class="absolute bottom-1/4 -right-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl float-anim" style="animation-delay: 3s"></div>
 
             {{-- Content --}}
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-28 sm:py-32 w-full">
+            <div class="relative z-10 flex-1 flex items-center justify-center w-full max-w-7xl mx-auto px-4 sm:px-6 pt-28 pb-16">
                 <div class="max-w-2xl lg:max-w-3xl text-center mx-auto">
                     <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-10 fade-up">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -114,19 +114,18 @@
                         @endguest
                     </div>
                 </div>
+            </div>
 
-                {{-- Dots (centered) --}}
-                <div class="flex gap-2 mt-14 justify-center fade-up delay-300" id="heroDots">
+            {{-- Dots + Scroll hint (di flow, selalu di bawah konten) --}}
+            <div class="relative z-10 pb-10 flex flex-col items-center gap-5">
+                <div class="flex gap-2 fade-up delay-300" id="heroDots">
                     @foreach ($heroSliders as $i => $slide)
                         <button onclick="heroGoTo({{ $i }})" class="hero-dot h-1.5 rounded-full transition-all duration-500 {{ $i === 0 ? 'bg-white w-10' : 'bg-white/30 w-3 hover:bg-white/60' }}"></button>
                     @endforeach
                 </div>
-            </div>
-
-            {{-- Scroll hint --}}
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-white/50">
-                <span class="text-[10px] uppercase tracking-widest">Scroll</span>
-                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                <div class="hidden sm:flex flex-col items-center text-white/40">
+                    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                </div>
             </div>
         </section>
 
