@@ -88,26 +88,26 @@
             {{-- Content --}}
             <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-28 sm:py-32 w-full">
                 <div class="max-w-2xl lg:max-w-3xl text-center mx-auto">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-7 fade-up">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full mb-10 fade-up">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span class="text-xs font-medium text-white/90 tracking-wide">Sistem Informasi Desa Digital</span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.08] tracking-tight mb-7 fade-up delay-100 text-balance">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.15] tracking-tight mb-10 fade-up delay-100 text-balance">
                         Desa Waeleman <span class="gradient-text">Lebih Modern</span> &amp; Transparan
                     </h1>
 
-                    <p class="text-base sm:text-lg text-white/70 leading-relaxed mb-9 fade-up delay-200 mx-auto max-w-xl lg:max-w-2xl">
+                    <p class="text-base sm:text-lg text-white/70 leading-loose mb-12 fade-up delay-200 mx-auto max-w-xl lg:max-w-2xl">
                         Platform terintegrasi untuk pengelolaan data penduduk, kartu keluarga, surat-menyurat, dan informasi publik desa — semua dalam satu sistem yang cepat, akurat, dan mudah digunakan.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 fade-up delay-300">
-                        <a href="{{ route('pengumuman.publik') }}" class="group inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-xl shadow-indigo-500/30 transition-all">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 fade-up delay-300 max-w-md sm:max-w-none mx-auto">
+                        <a href="{{ route('pengumuman.publik') }}" class="group inline-flex items-center justify-center gap-2.5 px-8 py-4 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all duration-200 whitespace-nowrap">
                             Lihat Pengumuman
                             <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </a>
                         @guest
-                            <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-xl hover:bg-white/20 transition-all">
+                            <a href="{{ route('login') }}" class="inline-flex items-center justify-center gap-2.5 px-8 py-4 text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-xl hover:bg-white/20 hover:scale-[1.02] transition-all duration-200 whitespace-nowrap">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                                 Masuk Petugas
                             </a>
@@ -116,7 +116,7 @@
                 </div>
 
                 {{-- Dots (centered) --}}
-                <div class="flex gap-2 mt-10 justify-center fade-up delay-300" id="heroDots">
+                <div class="flex gap-2 mt-14 justify-center fade-up delay-300" id="heroDots">
                     @foreach ($heroSliders as $i => $slide)
                         <button onclick="heroGoTo({{ $i }})" class="hero-dot h-1.5 rounded-full transition-all duration-500 {{ $i === 0 ? 'bg-white w-10' : 'bg-white/30 w-3 hover:bg-white/60' }}"></button>
                     @endforeach
