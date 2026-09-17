@@ -156,7 +156,7 @@
                     $stats = [
                         ['label' => 'Penduduk Aktif', 'value' => number_format($totalPenduduk, 0, ',', '.'), 'color' => 'blue', 'icon' => 'users'],
                         ['label' => 'Kartu Keluarga', 'value' => number_format($totalKk, 0, ',', '.'), 'color' => 'emerald', 'icon' => 'home'],
-                        ['label' => 'Surat Terbit', 'value' => number_format($totalSurat, 0, ',', '.'), 'color' => 'purple', 'icon' => 'mail', 'empty' => 'Belum ada surat diterbitkan', 'action' => ['label' => 'Buat surat', 'route' => 'surat.create']],
+                        ['label' => 'Surat Terbit', 'value' => number_format($totalSurat, 0, ',', '.'), 'color' => 'purple', 'icon' => 'mail', 'empty' => 'Belum ada surat diterbitkan'],
                         ['label' => 'Total Rumah', 'value' => number_format($totalRumah, 0, ',', '.'), 'color' => 'amber', 'icon' => 'building'],
                     ];
                 @endphp
@@ -178,11 +178,6 @@
                             <p class="text-xs sm:text-sm text-gray-500 truncate">{{ $s['label'] }}</p>
                             @if(!empty($s['empty']) && (int) preg_replace('/\D/', '', $s['value']) === 0)
                                 <p class="text-[11px] text-gray-400 mt-1.5 leading-snug">{{ $s['empty'] }}</p>
-                                @if(!empty($s['action']))
-                                    <a href="{{ route($s['action']['route']) }}" class="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 mt-0.5">
-                                        {{ $s['action']['label'] }} →
-                                    </a>
-                                @endif
                             @endif
                         </div>
                     </div>
