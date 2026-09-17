@@ -224,6 +224,10 @@
 
                         el.removeAttribute('contenteditable');
                         let newHtml = this.$refs.preview.innerHTML;
+                        // Hapus komentar internal Livewire (morph marker) yang tersuntik ke DOM
+                        newHtml = newHtml.replace(/<!--\[if[\s\S]*?\]><!\[endif\]-->/g, '');
+                        // Hapus komentar internal Livewire lain (jika ada)
+                        newHtml = newHtml.replace(/<!--livewire[\s\S]*?-->/gi, '');
                         newHtml = newHtml.trim();
                         this.htmlLocal = newHtml;
                         this.$wire.set('html', newHtml);
