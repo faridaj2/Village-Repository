@@ -151,7 +151,7 @@
     @endphp
     <section class="relative -mt-20 z-20 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="bg-white rounded-3xl shadow-2xl shadow-gray-900/10 border border-gray-100 p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="bg-white rounded-3xl shadow-[0_4px_24px_rgba(15,23,42,0.06)] p-6 sm:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 @php
                     $stats = [
                         ['label' => 'Penduduk Aktif', 'value' => number_format($totalPenduduk, 0, ',', '.'), 'color' => 'blue', 'icon' => 'users'],
