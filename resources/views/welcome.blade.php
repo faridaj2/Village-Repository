@@ -187,7 +187,7 @@
     </section>
 
     {{-- Fitur --}}
-    <section id="fitur" class="py-24 sm:py-32 px-4 sm:px-6">
+    <section id="fitur" class="py-32 sm:py-44 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 max-w-2xl mx-auto">
                 <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Fitur Unggulan</span>
