@@ -1,8 +1,11 @@
     <div x-data="{
         previewHtml: @js($body_html ?? ''),
-        copied: ''
-    }"
-    x-init="$watch('$wire.body_html', value => { previewHtml = value; })">
+        copied: '',
+        showPreview: false,
+        init() {
+            this.$watch('$wire.body_html', value => { this.previewHtml = value; });
+        }
+    }">
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -59,69 +62,82 @@
             </div>
         </div>
 
-        {{-- Editor + Preview --}}
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {{-- Kiri: Editor --}}
-            <div class="lg:col-span-5 space-y-4">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Isi Template</h3>
-                        <span class="text-[11px] font-mono text-gray-400">HTML</span>
-                    </div>
+        {{-- Editor / Preview dengan toggle --}}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            {{-- Header toggle --}}
+            <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
+                <div class="inline-flex items-center bg-gray-100 rounded-xl p-1">
+                    <button type="button"
+                            @click="showPreview = false"
+                            :class="!showPreview ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+                            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        Editor
+                    </button>
+                    <button type="button"
+                            @click="showPreview = true"
+                            :class="showPreview ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+                            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        Preview
+                    </button>
+                </div>
+                <span class="text-[11px] font-mono text-gray-400" x-show="!showPreview">HTML</span>
+                <span class="text-[11px] text-gray-400" x-show="showPreview" x-cloak>A4 (210×297mm)</span>
+            </div>
+
+            {{-- Body --}}
+            <div class="p-5">
+                {{-- Editor --}}
+                <div x-show="!showPreview">
                     <textarea
                         wire:model="body_html"
                         @input.debounce.300ms="previewHtml = $event.target.value"
-                        rows="22"
+                        rows="24"
                         placeholder="Tulis HTML template surat di sini..."
                         class="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-sm font-mono leading-relaxed focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all resize-y"
-                        style="min-height: 440px;"></textarea>
+                        style="min-height: 520px;"></textarea>
                     @error('body_html') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                {{-- Variabel --}}
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Variabel</h3>
-                        <span class="text-[11px] text-gray-400">Klik untuk copy</span>
-                    </div>
-                    <div class="space-y-2">
-                        @foreach($varGroups as $group)
-                            <div class="bg-{{ $group['color'] }}-50 rounded-xl p-3">
-                                <p class="text-[10px] font-bold text-{{ $group['color'] }}-800 mb-1.5 uppercase tracking-wider">{{ $group['title'] }}</p>
-                                <div class="flex flex-wrap gap-1.5">
-                                    @foreach($group['vars'] as $v)
-                                        <button type="button"
-                                            @click="navigator.clipboard.writeText('{{ '{' . '{' . $v['var'] . '}' . '}' }}'); copied='{{ $v['var'] }}'; setTimeout(()=>copied='', 1200)"
-                                            class="inline-flex items-center gap-1 px-2 py-1 bg-{{ $group['color'] }}-100 hover:bg-{{ $group['color'] }}-200 rounded-lg text-[10px] font-mono text-{{ $group['color'] }}-700 transition-colors"
-                                            title="{{ $v['example'] }}">
-                                            {{ '{' . '{' . $v['var'] . '}' . '}' }}
-                                            <span x-show="copied==='{{ $v['var'] }}'" x-transition class="text-emerald-600 font-bold">✓</span>
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-
-            {{-- Kanan: Preview --}}
-            <div class="lg:col-span-7">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 lg:sticky lg:top-24">
-                    <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Preview Surat</h3>
-                        <span class="text-[11px] text-gray-400">A4 (210×297mm)</span>
-                    </div>
-                    <div class="bg-gray-100 rounded-xl p-4 overflow-auto" style="max-height: calc(100vh - 220px);">
+                {{-- Preview --}}
+                <div x-show="showPreview" x-cloak>
+                    <div class="bg-gray-100 rounded-xl p-4 overflow-auto" style="max-height: 70vh;">
                         <div class="bg-white shadow-md mx-auto"
                              style="width: 100%; max-width: 210mm; min-height: 297mm; padding: 20mm; box-sizing: border-box; color: #000; line-height: 1.55; font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
-                            <div x-html="previewHtml"></div>
+                            <div x-show="previewHtml && previewHtml.trim() !== ''" x-html="previewHtml"></div>
                             <template x-if="!previewHtml || previewHtml.trim() === ''">
                                 <p class="text-gray-400 italic text-center" style="font-family: Inter, sans-serif; font-size: 13px;">Preview akan muncul di sini saat Anda mengetik...</p>
                             </template>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        {{-- Variabel --}}
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Variabel</h3>
+                <span class="text-[11px] text-gray-400">Klik untuk copy</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                @foreach($varGroups as $group)
+                    <div class="bg-{{ $group['color'] }}-50 rounded-xl p-3">
+                        <p class="text-[10px] font-bold text-{{ $group['color'] }}-800 mb-1.5 uppercase tracking-wider">{{ $group['title'] }}</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            @foreach($group['vars'] as $v)
+                                <button type="button"
+                                    @click="navigator.clipboard.writeText('{{ '{' . '{' . $v['var'] . '}' . '}' }}'); copied='{{ $v['var'] }}'; setTimeout(()=>copied='', 1200)"
+                                    class="inline-flex items-center gap-1 px-2 py-1 bg-{{ $group['color'] }}-100 hover:bg-{{ $group['color'] }}-200 rounded-lg text-[10px] font-mono text-{{ $group['color'] }}-700 transition-colors"
+                                    title="{{ $v['example'] }}">
+                                    {{ '{' . '{' . $v['var'] . '}' . '}' }}
+                                    <span x-show="copied==='{{ $v['var'] }}'" x-transition class="text-emerald-600 font-bold">✓</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
 
