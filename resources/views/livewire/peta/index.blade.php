@@ -87,10 +87,44 @@
                         scrollWheelZoom: true,
                     }).setView([-3.4, 126.97], 14);
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
                         maxZoom: 19,
-                    }).addTo(this.map);
+                    });
+
+                    const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics',
+                        maxZoom: 19,
+                    });
+
+                    const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Style: &copy; OpenTopoMap',
+                        maxZoom: 17,
+                    });
+
+                    const labels = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+                        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                        maxZoom: 20,
+                        opacity: 0.9,
+                    });
+
+                    // Default: OSM
+                    osm.addTo(this.map);
+
+                    // Satellite + labels overlay (label agar nama jalan tetap terlihat)
+                    const satelliteGroup = L.layerGroup([satellite, labels]);
+
+                    // Layer control
+                    const baseMaps = {
+                        'Peta Jalan (OSM)': osm,
+                        'Satelit': satelliteGroup,
+                        'Topografi': topo,
+                    };
+                    L.control.layers(baseMaps, null, { position: 'topright', collapsed: false }).addTo(this.map);
+
+                    this.map.on('baselayerchange', () => {
+                        setTimeout(() => this.map.invalidateSize(), 100);
+                    });
 
                     setTimeout(() => {
                         this.map.invalidateSize();
