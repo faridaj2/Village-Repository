@@ -125,6 +125,7 @@ class Form extends Component
     {
         return view('livewire.surat.template.form')->with([
             'varGroups' => $this->variableGroups,
+            'blocks' => \App\Models\SuratBlock::orderBy('nama')->get(),
         ]);
     }
 }

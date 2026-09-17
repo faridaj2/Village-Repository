@@ -4,6 +4,21 @@
         showPreview: false,
         init() {
             this.$watch('$wire.body_html', value => { this.previewHtml = value; });
+        },
+        insertBlock(code) {
+            const ta = this.$refs.editor;
+            if (!ta) return;
+            const start = ta.selectionStart;
+            const end = ta.selectionEnd;
+            const current = ta.value;
+            const newValue = current.slice(0, start) + code + current.slice(end);
+            this.$wire.set('body_html', newValue);
+            this.previewHtml = newValue;
+            this.$nextTick(() => {
+                ta.focus();
+                const pos = start + code.length;
+                ta.setSelectionRange(pos, pos);
+            });
         }
     }">
 
@@ -91,6 +106,7 @@
                 {{-- Editor --}}
                 <div x-show="!showPreview">
                     <textarea
+                        x-ref="editor"
                         wire:model="body_html"
                         @input.debounce.300ms="previewHtml = $event.target.value"
                         rows="24"
@@ -114,6 +130,27 @@
                 </div>
             </div>
         </div>
+
+        {{-- Blok Kode --}}
+        @if($blocks->count() > 0)
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Blok Kode</h3>
+                <a href="{{ route('surat.manual.blok') }}" class="text-[11px] text-indigo-600 hover:underline">Kelola blok</a>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                @foreach($blocks as $block)
+                    <button type="button"
+                        @click="insertBlock(@js($block->kode))"
+                        class="inline-flex items-center gap-1.5 px-3 py-2 bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 rounded-lg transition-colors"
+                        title="{{ Str::limit($block->kode, 100) }}">
+                        <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                        {{ $block->nama }}
+                    </button>
+                @endforeach
+            </div>
+        </div>
+        @endif
 
         {{-- Variabel --}}
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
