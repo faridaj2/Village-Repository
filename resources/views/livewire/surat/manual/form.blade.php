@@ -68,10 +68,23 @@
                     <span x-show="showPreview" x-cloak>Preview</span>
                 </h3>
                 <div class="flex items-center gap-4">
-                    <label class="inline-flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" x-model="showPreview" @change="if(showPreview) { syncToServer(true); } else { syncToServer(false); }" class="w-4 h-4 text-indigo-600 bg-white border-gray-300 rounded focus:ring-indigo-500">
-                        <span class="text-xs font-medium text-gray-700">Tampilkan Preview</span>
-                    </label>
+                    {{-- Toggle Editor/Preview --}}
+                    <div class="inline-flex items-center bg-gray-100 rounded-xl p-1 relative">
+                        <button type="button"
+                                @click="showPreview = false; syncToServer(false)"
+                                :class="!showPreview ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            Editor
+                        </button>
+                        <button type="button"
+                                @click="showPreview = true; syncToServer(true)"
+                                :class="showPreview ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            Preview
+                        </button>
+                    </div>
 
                     {{-- Tombol Cetak selalu tampil --}}
                     <button type="button"
