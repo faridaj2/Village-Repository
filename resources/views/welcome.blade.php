@@ -171,11 +171,11 @@
         </section>
 
         {{-- Fitur --}}
-        <section id="fitur" class="pt-28 pb-24 px-4 sm:px-6">
+        <section id="fitur" class="pt-40 sm:pt-48 pb-24 px-4 sm:px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16 max-w-2xl mx-auto">
                     <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Fitur Unggulan</span>
-                    <h2 class="text-3xl sm:text-5xl font-black mt-3 mb-4 tracking-tight">Semua Kebutuhan<br>Administrasi Desa</h2>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-4 mb-5 tracking-tight leading-tight">Semua Kebutuhan<br>Administrasi Desa</h2>
                     <p class="text-gray-500 leading-relaxed">Satu platform untuk mengelola seluruh data dan layanan administrasi desa dengan mudah.</p>
                 </div>
 
@@ -217,7 +217,7 @@
         </section>
 
         {{-- Pengumuman --}}
-        <section id="pengumuman" class="py-24 px-4 sm:px-6 bg-gray-50/70">
+        <section id="pengumuman" class="pt-32 pb-24 px-4 sm:px-6 bg-gray-50/70">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
                     <div>
