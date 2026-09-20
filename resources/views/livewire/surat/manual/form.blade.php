@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -13,7 +13,7 @@
 
     <form @submit.prevent="saveManual()" x-data="suratManualPreview()">
         {{-- Info --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6 mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1.5">Nama Surat</label>
@@ -60,7 +60,7 @@
         </div>
 
         {{-- Editor / Preview gabungan --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6 relative w-full max-w-full overflow-x-hidden">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 mb-6 relative w-full max-w-full overflow-x-hidden">
             {{-- Header dengan toggle --}}
             <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-b border-gray-100 relative z-10 flex-shrink-0">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">
@@ -127,7 +127,7 @@
 
         {{-- Blok Kode & Variabel --}}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Blok Kode</h3>
                 @if ($blocks->count() > 0)
                     <div class="flex flex-wrap gap-2">
@@ -140,7 +140,7 @@
                 @endif
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Variabel</h3>
                 <div class="space-y-2">
                     @foreach($varGroups as $group)

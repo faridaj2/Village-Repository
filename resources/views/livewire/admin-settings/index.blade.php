@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Pengaturan Sistem</h2>
@@ -9,7 +9,7 @@
     <x-flash-toast />
 
     <!-- Pengaturan Umum -->
-    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
                 <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Identitas Desa & Tanda Tangan -->
-    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
                 <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
@@ -129,7 +129,7 @@
     </div>
 
     <!-- Hero Slider -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
         <div class="flex items-center justify-between mb-5">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">

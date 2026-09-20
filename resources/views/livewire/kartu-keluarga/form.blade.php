@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('kartu-keluarga.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></a>
@@ -8,7 +8,7 @@
         </div>
     </x-slot>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
         <form wire:submit="save" class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>

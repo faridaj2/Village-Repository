@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -14,7 +14,7 @@
 
     <x-flash-toast />
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
         <div class="p-5 border-b border-gray-100">
             <div class="flex gap-2">
                 @foreach (['' => 'Semua', 'diajukan' => 'Diajukan', 'diproses' => 'Diproses', 'selesai' => 'Selesai', 'ditolak' => 'Ditolak'] as $val => $label)

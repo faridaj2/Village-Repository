@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Peta Desa</h2>
@@ -8,7 +8,7 @@
 
     <x-flash-toast />
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
         <!-- Filter Bar -->
         <div class="p-4 border-b border-gray-100 space-y-3">
             <div class="flex flex-wrap items-center gap-3">
@@ -62,13 +62,35 @@
                 boundaries: @js($boundaries)
             };
         </script>
-        <div wire:ignore x-data="petaDesa()" x-init="$nextTick(() => init())" x-on:map-data.window="window.petaData = $event.detail; $nextTick(() => renderAll())" style="height: 600px;">
+        <div wire:ignore x-data="petaDesa()" x-init="$nextTick(() => init())" x-on:map-data.window="window.petaData = $event.detail; $nextTick(() => renderAll())" class="relative" style="height: 600px;">
             <div x-ref="map" class="w-full h-full"></div>
+
+            {{-- Custom Base Layer Switcher (Glass) --}}
+            <div class="absolute top-4 right-4 z-[1000] flex flex-col gap-1.5 p-2 bg-white/80 backdrop-blur-xl border border-white/70 rounded-2xl shadow-xl shadow-slate-200/50">
+                <button @click="setBase('osm')" class="group flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all duration-200" :class="currentBase === 'osm' ? 'bg-gradient-to-r from-indigo-500 to-cyan-500 text-white shadow-lg shadow-indigo-500/30' : 'hover:bg-indigo-50 text-gray-600'">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v6.75m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+                    <span class="text-xs font-semibold whitespace-nowrap">Peta Jalan</span>
+                </button>
+                <button @click="setBase('satelit')" class="group flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all duration-200" :class="currentBase === 'satelit' ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30' : 'hover:bg-emerald-50 text-gray-600'">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+                    <span class="text-xs font-semibold whitespace-nowrap">Satelit</span>
+                </button>
+                <button @click="setBase('topo')" class="group flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all duration-200" :class="currentBase === 'topo' ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/30' : 'hover:bg-amber-50 text-gray-600'">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+                    <span class="text-xs font-semibold whitespace-nowrap">Topografi</span>
+                </button>
+            </div>
         </div>
     </div>
 
     @push('scripts')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .leaflet-popup-content-wrapper { border-radius: 16px; box-shadow: 0 12px 32px -8px rgba(15,23,42,.28); font-family: 'Plus Jakarta Sans', sans-serif; }
+        .leaflet-popup-content { margin: 14px 18px; line-height: 1.5; }
+        .leaflet-container { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .leaflet-bar a { border-radius: 10px !important; }
+    </style>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         function petaDesa() {
@@ -108,23 +130,15 @@
                         opacity: 0.9,
                     });
 
-                    // Default: OSM
-                    osm.addTo(this.map);
-
+                    // Base layers untuk custom switcher
                     // Satellite + labels overlay (label agar nama jalan tetap terlihat)
-                    const satelliteGroup = L.layerGroup([satellite, labels]);
-
-                    // Layer control
-                    const baseMaps = {
-                        'Peta Jalan (OSM)': osm,
-                        'Satelit': satelliteGroup,
-                        'Topografi': topo,
+                    this._base = {
+                        osm: osm,
+                        satelit: L.layerGroup([satellite, labels]),
+                        topo: topo,
                     };
-                    L.control.layers(baseMaps, null, { position: 'topright', collapsed: false }).addTo(this.map);
-
-                    this.map.on('baselayerchange', () => {
-                        setTimeout(() => this.map.invalidateSize(), 100);
-                    });
+                    this.currentBase = 'osm';
+                    osm.addTo(this.map);
 
                     setTimeout(() => {
                         this.map.invalidateSize();
@@ -132,6 +146,14 @@
                     }, 300);
 
 
+                },
+
+                setBase(key) {
+                    if (!this.map || this.currentBase === key || !this._base || !this._base[key]) return;
+                    this.map.removeLayer(this._base[this.currentBase]);
+                    this._base[key].addTo(this.map);
+                    this.currentBase = key;
+                    setTimeout(() => this.map.invalidateSize(), 100);
                 },
 
                 renderAll() {
@@ -184,7 +206,7 @@
                             fillOpacity: 0.9
                         }).addTo(this.map);
                         marker.bindPopup(`
-                            <div style="font-family:Inter,sans-serif;min-width:180px">
+                            <div style="font-family:'Plus Jakarta Sans',sans-serif;min-width:180px">
                                 <b style="font-size:14px">${r.kode}</b><br>
                                 <span style="color:#666;font-size:12px">${r.alamat}</span><br>
                                 <span style="color:#999;font-size:11px">${r.rw} / ${r.rt}</span>
@@ -205,7 +227,7 @@
                             fillOpacity: 0.9
                         }).addTo(this.map);
                         marker.bindPopup(`
-                            <div style="font-family:Inter,sans-serif;min-width:150px">
+                            <div style="font-family:'Plus Jakarta Sans',sans-serif;min-width:150px">
                                 <b style="font-size:14px">${f.nama}</b><br>
                                 <span style="display:inline-block;margin-top:2px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:500;background:#dbeafe;color:#1e40af">${f.jenis}</span>
                             </div>

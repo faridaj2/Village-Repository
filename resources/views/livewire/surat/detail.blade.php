@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -18,7 +18,7 @@
         {{-- Left: Info & Actions --}}
         <div class="lg:col-span-1 space-y-4">
             {{-- Info Card --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Informasi Surat</h3>
                 <div class="space-y-3">
                     <div>
@@ -70,7 +70,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Aksi</h3>
                 <div class="space-y-2">
                     @if ($surat->status === 'draft')
@@ -111,7 +111,7 @@
 
             {{-- Print Log --}}
             @if ($surat->printLogs->count() > 0)
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                     <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Riwayat Cetak</h3>
                     <div class="space-y-2">
                         @foreach ($surat->printLogs->take(10) as $log)
@@ -128,7 +128,7 @@
 
         {{-- Right: Preview --}}
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Preview Surat</h3>
                     @if ($surat->draft_html)

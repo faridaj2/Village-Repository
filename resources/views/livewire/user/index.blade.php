@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Kelola User</h2>
@@ -16,7 +16,7 @@
         </button>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead>

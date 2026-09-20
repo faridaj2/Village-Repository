@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -12,7 +12,7 @@
 
     <!-- Form -->
     @if ($showForm)
-        <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-base font-semibold text-gray-900 mb-4">{{ $editId ? 'Edit Struktur' : 'Tambah Jabatan' }}</h3>
             <form wire:submit="save" class="space-y-5">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -58,7 +58,7 @@
             $roots = $strukturList->whereNull('parent_id');
         @endphp
         @if ($roots->count() > 0)
-            <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
                 <div class="px-6 pt-4 pb-3 border-b border-gray-100 flex items-center justify-between">
                     <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Bagan Struktur</h3>
                     <div class="flex items-center gap-1">
@@ -227,7 +227,7 @@
     @endpush
 
     <!-- Daftar -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
         <div class="p-5 border-b border-gray-100 flex items-center justify-between">
             <p class="text-sm text-gray-500">{{ count($strukturList) }} jabatan terdaftar</p>
             @if (!$showForm)

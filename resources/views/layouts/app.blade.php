@@ -17,7 +17,7 @@
             <div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden" @click="sidebarOpen = false"></div>
 
             <!-- Sidebar -->
-            <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'" class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white border-r border-gray-200/80 transition-all duration-300" :style="sidebarCollapsed ? 'width: 80px' : 'width: 260px'">
+            <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'" class="fixed inset-y-0 left-0 z-50 flex flex-col bg-white/80 backdrop-blur-2xl border-r border-white/70 shadow-xl shadow-slate-200/40 transition-all duration-300" :style="sidebarCollapsed ? 'width: 80px' : 'width: 260px'">
                 <!-- Logo -->
                 <div class="flex items-center h-16 px-5 border-b border-gray-100">
                     <a href="{{ route('dashboard') }}" class="flex items-center">
@@ -116,7 +116,7 @@
             <!-- Main -->
             <div class="transition-all duration-300 lg:ml-[260px]" :class="{ 'lg:!ml-[80px]': sidebarCollapsed }">
                 <!-- Topbar -->
-                <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-200/80">
+                <header class="sticky top-0 z-30 bg-white/60 backdrop-blur-2xl border-b border-white/70">
                     <div class="flex items-center justify-between gap-3 px-4 sm:px-6 min-h-[4rem]">
                         <div class="flex items-center gap-3 min-w-0 flex-1">
                             <button @click="sidebarOpen = true" class="lg:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 flex-shrink-0">

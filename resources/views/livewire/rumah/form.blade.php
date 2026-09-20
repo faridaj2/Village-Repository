@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('rumah.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors">
@@ -11,7 +11,7 @@
         </div>
     </x-slot>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
         <form wire:submit="save" class="space-y-6">
             <!-- Info Dasar -->
             <div>

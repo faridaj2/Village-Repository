@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -13,7 +13,7 @@
     </x-slot>
 
     {{-- Step Indicator --}}
-    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+    <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-4">
         <div class="flex items-center justify-center gap-0">
             @foreach (['Pilih Template', 'Pilih Penduduk', 'Review & Finalisasi'] as $i => $label)
                 @php $stepNum = $i + 1; @endphp
@@ -34,7 +34,7 @@
 
     {{-- Step 1: Select Template --}}
     @if ($step === 1)
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Pilih Template Surat</h3>
 
             @error('template') <p class="text-xs text-red-500 mb-3">{{ $message }}</p> @enderror
@@ -70,7 +70,7 @@
 
     {{-- Step 2: Select Penduduk --}}
     @if ($step === 2)
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Pilih Penduduk</h3>
 
             @error('penduduk') <p class="text-xs text-red-500 mb-3">{{ $message }}</p> @enderror
@@ -120,7 +120,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {{-- Left: Info & Controls --}}
             <div class="lg:col-span-1 space-y-4">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                     <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Info Surat</h3>
 
                     <div class="space-y-3">
@@ -145,7 +145,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+                <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
                     <div class="flex flex-col gap-2">
                         <button wire:click="loadPreview" class="w-full px-4 py-2.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-200 transition-colors">
                             🔄 Refresh Preview
@@ -166,7 +166,7 @@
 
             {{-- Right: Preview --}}
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Preview Surat</h3>
                         <div class="flex items-center gap-3">

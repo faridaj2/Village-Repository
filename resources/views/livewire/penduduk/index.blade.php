@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Data Penduduk</h2>
@@ -8,7 +8,7 @@
 
     <x-flash-toast />
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
         <!-- Toolbar -->
         <div class="p-5 border-b border-gray-100 space-y-3">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

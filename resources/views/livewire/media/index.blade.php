@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -11,7 +11,7 @@
     <x-flash-toast />
 
     {{-- Upload --}}
-    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6" x-data="mediaUploader()" x-on:media-uploaded.window="previews = []; $refs.fileInput.value = ''">
+    <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6" x-data="mediaUploader()" x-on:media-uploaded.window="previews = []; $refs.fileInput.value = ''">
         <div class="flex items-center gap-3 mb-5">
             <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
                 <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
@@ -112,7 +112,7 @@
     {{-- Grid Gambar --}}
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         @forelse ($files as $file)
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
                 <div class="bg-gray-100" style="aspect-ratio: 1 / 1">
                     <img src="{{ $file->url }}" alt="{{ $file->original_name }}" class="w-full h-full object-cover" loading="lazy">
                 </div>
@@ -126,7 +126,7 @@
                 </div>
             </div>
         @empty
-            <div class="col-span-full bg-white rounded-2xl shadow-sm border border-gray-100 py-16 text-center">
+            <div class="col-span-full bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 py-16 text-center">
                 <p class="text-sm text-gray-500">Belum ada gambar. Upload gambar pertama Anda.</p>
             </div>
         @endforelse

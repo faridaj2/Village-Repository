@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('penduduk.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors">
@@ -16,7 +16,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
             <!-- Info Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
                 <div class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600">
                     <div class="flex items-center gap-4">
                         <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
@@ -48,7 +48,7 @@
             </div>
 
             <!-- Mutasi -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Riwayat Mutasi</h3>
                 @forelse ($penduduk->mutasis as $mutasi)
                     <div class="flex items-center gap-4 py-3 border-b border-gray-50 last:border-0">
@@ -69,7 +69,7 @@
 
         <!-- Sidebar -->
         <div class="space-y-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Status</h3>
                 @php
                     $s = match($penduduk->status) { 'aktif' => ['bg-emerald-50 text-emerald-700 border-emerald-200', 'Aktif'], 'pindah' => ['bg-amber-50 text-amber-700 border-amber-200', 'Pindah'], 'meninggal' => ['bg-gray-100 text-gray-600 border-gray-200', 'Meninggal'] };
@@ -117,7 +117,7 @@
             </div>
 
             <!-- Rumah Individu -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Rumah Individu</h3>
                 @if ($penduduk->rumah)
                     @php $rumah = $penduduk->rumah; @endphp
@@ -185,7 +185,7 @@
             </div>
 
             <!-- Rumah KK -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Rumah dari KK</h3>
                 @if ($penduduk->kartuKeluarga?->rumah)
                     @php $rumah = $penduduk->kartuKeluarga->rumah; @endphp

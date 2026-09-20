@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Kelola Wilayah</h2>
@@ -9,7 +9,7 @@
     <x-flash-toast />
 
     <!-- Pengaturan Desa -->
-    <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
         <div class="flex items-center justify-between p-5 border-b border-gray-100">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
@@ -76,7 +76,7 @@
 
     <!-- RW Form -->
     @if ($showRwForm)
-        <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-base font-semibold text-gray-900 mb-4">{{ $editRwId ? 'Edit RW' : 'Tambah RW' }}</h3>
             <form wire:submit="saveRw" class="space-y-5">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -115,7 +115,7 @@
 
     <!-- RT Form -->
     @if ($showRtForm)
-        <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="mb-6 bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-base font-semibold text-gray-900 mb-4">{{ $editRtId ? 'Edit RT' : 'Tambah RT' }}</h3>
             <form wire:submit="saveRt" class="space-y-5">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -175,7 +175,7 @@
         </div>
 
         @forelse ($rwList as $rw)
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
                 <!-- RW Header -->
                 <div class="flex items-center justify-between p-5">
                     <div class="flex items-center gap-4">
@@ -242,7 +242,7 @@
                 @endif
             </div>
         @empty
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+            <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-12 text-center">
                 <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>

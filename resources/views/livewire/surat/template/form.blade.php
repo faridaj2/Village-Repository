@@ -1,4 +1,4 @@
-    <div x-data="{
+﻿    <div x-data="{
         previewHtml: @js($body_html ?? ''),
         copied: '',
         showPreview: false,
@@ -37,7 +37,7 @@
 
     <form wire:submit="save" class="space-y-6">
         {{-- Info Template --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Informasi Template</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
@@ -78,7 +78,7 @@
         </div>
 
         {{-- Editor / Preview dengan toggle --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50">
             {{-- Header toggle --}}
             <div class="flex flex-wrap items-center gap-3 px-5 py-4 border-b border-gray-100">
                 <div class="inline-flex items-center bg-gray-100 rounded-2xl p-1.5 shadow-inner">
@@ -133,7 +133,7 @@
 
         {{-- Blok Kode --}}
         @if($blocks->count() > 0)
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Blok Kode</h3>
                 <a href="{{ route('surat.manual.blok') }}" class="text-[11px] text-indigo-600 hover:underline">Kelola blok</a>
@@ -153,7 +153,7 @@
         @endif
 
         {{-- Variabel --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-5">
             <div class="flex items-center justify-between mb-3">
                 <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Variabel</h3>
                 <span class="text-[11px] text-gray-400">Klik untuk copy</span>

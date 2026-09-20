@@ -6,7 +6,7 @@
         <title>{{ $title ?? 'SIDESA' }}</title>
         <link rel="icon" type="image/png" href="{{ asset('icon.png') }}">
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
@@ -47,7 +47,7 @@
             </div>
 
             <!-- Right Side - Form -->
-            <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
+            <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gradient-to-br from-slate-50 via-indigo-50/50 to-cyan-50/40">
                 <div class="w-full max-w-md">
                     {{ $slot }}
                 </div>

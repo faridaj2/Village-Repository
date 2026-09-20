@@ -1,4 +1,4 @@
-<div>
+﻿<div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
@@ -19,7 +19,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {{-- Form Blok --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">{{ $blockId ? 'Edit Blok' : 'Buat Blok Baru' }}</h3>
             <form wire:submit="save">
                 <div class="space-y-4">
@@ -54,7 +54,7 @@
         </div>
 
         {{-- Daftar Blok --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
             <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Daftar Blok</h3>
             @if ($blocks->count() > 0)
                 <div class="space-y-3">
