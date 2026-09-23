@@ -125,7 +125,7 @@
 
                 <!-- Toggle Kepala Keluarga -->
                 <div class="mb-5">
-                    <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors" wire:click="$toggle('isKepalaKeluarga')">
                         <div class="relative">
                             <input type="checkbox" wire:model.live="isKepalaKeluarga" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-indigo-500 transition-colors"></div>
@@ -135,7 +135,7 @@
                             <span class="text-sm font-medium text-gray-900">Kepala Keluarga</span>
                             <p class="text-xs text-gray-500">Aktifkan jika penduduk ini adalah kepala keluarga baru</p>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
                 <!-- Jika Kepala Keluarga: Input No KK Baru + RT/RW -->
@@ -233,7 +233,7 @@
 
                 <!-- Toggle Punya Rumah -->
                 <div class="mb-5">
-                    <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors" wire:click="$toggle('hasRumah')">
                         <div class="relative">
                             <input type="checkbox" wire:model.live="hasRumah" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-amber-500 transition-colors"></div>
@@ -241,9 +241,9 @@
                         </div>
                         <div>
                             <span class="text-sm font-medium text-gray-900">Punya Rumah KK</span>
-                            <p class="text-xs text-gray-500">Centang jika kepala keluarga memiliki rumah untuk KK ini</p>
+                            <p class="text-xs text-gray-500">Centang jika ingin mengisi detail rumah (RT/RW tetap di bagian Kartu Keluarga)</p>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
                 @if ($hasRumah)
@@ -309,7 +309,7 @@
 
                 <!-- Toggle Rumah Individu -->
                 <div class="mb-5">
-                    <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors" wire:click="$toggle('hasRumahIndividu')">
                         <div class="relative">
                             <input type="checkbox" wire:model.live="hasRumahIndividu" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
@@ -319,7 +319,7 @@
                             <span class="text-sm font-medium text-gray-900">Punya Rumah Individu</span>
                             <p class="text-xs text-gray-500">Centang jika penduduk memiliki rumah sendiri</p>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
                 @if ($hasRumahIndividu)
