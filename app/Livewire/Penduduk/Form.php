@@ -283,6 +283,20 @@ class Form extends Component
                 if ($kk && $this->no_kk_baru && $kk->no_kk !== $this->no_kk_baru) {
                     $kk->update(['no_kk' => $this->no_kk_baru]);
                 }
+                
+                // Update RT/RW rumah KK
+                if ($kk && $this->selectedRtForm) {
+                    if ($kk->rumah_id) {
+                        Rumah::where('id', $kk->rumah_id)->update(['rt_id' => $this->selectedRtForm]);
+                    } else {
+                        $rumahBaru = Rumah::create([
+                            'rt_id' => $this->selectedRtForm,
+                            'alamat' => null,
+                            'posisi' => $this->posisi ?: null,
+                        ]);
+                        $kk->update(['rumah_id' => $rumahBaru->id]);
+                    }
+                }
             } else {
                 // Create: buat KK baru
                 $rumahBaru = Rumah::create([
