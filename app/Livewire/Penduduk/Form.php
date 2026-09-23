@@ -249,16 +249,57 @@ class Form extends Component
         $this->showKkDropdown = false;
         $this->kkResults = [];
 
-        // Load RT/RW from selected KK's house
+        // PERBAIKAN: Load RT/RW langsung dari Kartu Keluarga, BUKAN dari rumah
         $kk = KartuKeluarga::find($id);
-        if ($kk && $kk->rumah && $kk->rumah->rt) {
-            $this->selectedRwForm = $kk->rumah->rt->rw_id;
+        if ($kk && $kk->rt_id) {
+            $this->selectedRwForm = $kk->rt->rw_id ?? '';
             $this->rtListForm = Rt::where('rw_id', $this->selectedRwForm)->orderBy('nama')->get();
-            $this->selectedRtForm = $kk->rumah->rt_id;
+            $this->selectedRtForm = $kk->rt_id;
         } else {
             $this->selectedRwForm = '';
             $this->selectedRtForm = '';
             $this->rtListForm = [];
+        }
+    }
+
+    public function updatedIsKepalaKeluarga($value)
+    {
+        if ($value) {
+            // Jika diaktifkan: bersihkan pilihan KK yang sudah ada
+            $this->selectedKkId = '';
+            $this->kkSearch = '';
+            $this->kkResults = [];
+            $this->showKkDropdown = false;
+            
+            // Prefill data jika sedang edit dan sudah punya KK
+            if ($this->penduduk && $this->penduduk->kartuKeluarga) {
+                $this->no_kk_baru = $this->penduduk->kartuKeluarga->no_kk;
+                if ($this->penduduk->kartuKeluarga->rt) {
+                    $this->selectedRwForm = $this->penduduk->kartuKeluarga->rt->rw_id;
+                    $this->rtListForm = Rt::where('rw_id', $this->selectedRwForm)->orderBy('nama')->get();
+                    $this->selectedRtForm = $this->penduduk->kartuKeluarga->rt_id;
+                }
+            }
+        } else {
+            // Jika dimatikan: bersihkan data KK baru agar form "Cari KK" muncul bersih
+            $this->no_kk_baru = '';
+            $this->selectedRwForm = '';
+            $this->selectedRtForm = '';
+            $this->rtListForm = [];
+        }
+    }
+
+    public function updatedHasRumah($value)
+    {
+        // Method ini eksplisit didefinisikan untuk memastikan tidak ada state yang terpengaruh
+        // saat toggle "Punya Rumah KK" diklik. Tidak mengubah isKepalaKeluarga.
+        if ($value) {
+            // Jika diaktifkan dan Kepala Keluarga, sinkronkan RT/RW dari form KK
+            if ($this->isKepalaKeluarga && $this->selectedRwForm) {
+                $this->rumahRwId = $this->selectedRwForm;
+                $this->rumahRtId = $this->selectedRtForm;
+                $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
+            }
         }
     }
 
