@@ -127,7 +127,7 @@
                 <div class="mb-5">
                     <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="relative">
-                            <input type="checkbox" wire:model.live="isKepalaKeluarga" class="sr-only peer">
+                            <input type="checkbox" wire:model.live="isKepalaKeluarga" wire:key="toggle-kk-{{ $penduduk?->id ?? 'new' }}" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-indigo-500 transition-colors"></div>
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>
@@ -235,7 +235,7 @@
                 <div class="mb-5">
                     <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="relative">
-                            <input type="checkbox" wire:model.live="hasRumah" class="sr-only peer">
+                            <input type="checkbox" wire:model.live="hasRumah" wire:key="toggle-rumah-{{ $penduduk?->id ?? 'new' }}" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-amber-500 transition-colors"></div>
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>

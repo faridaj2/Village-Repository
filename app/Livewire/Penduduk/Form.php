@@ -291,16 +291,9 @@ class Form extends Component
 
     public function updatedHasRumah($value)
     {
-        // Method ini eksplisit didefinisikan untuk memastikan tidak ada state yang terpengaruh
-        // saat toggle "Punya Rumah KK" diklik. Tidak mengubah isKepalaKeluarga.
-        if ($value) {
-            // Jika diaktifkan dan Kepala Keluarga, sinkronkan RT/RW dari form KK
-            if ($this->isKepalaKeluarga && $this->selectedRwForm) {
-                $this->rumahRwId = $this->selectedRwForm;
-                $this->rumahRtId = $this->selectedRtForm;
-                $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
-            }
-        }
+        // Tidak melakukan auto-sync untuk mencegah circular dependency 
+        // yang membuat toggle isKepalaKeluarga reset di browser seperti Brave.
+        // User dapat memilih RT/RW rumah secara manual jika diperlukan.
     }
 
     public function clearKk()
