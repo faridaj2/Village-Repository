@@ -285,9 +285,7 @@ class Form extends Component
             $rules['selectedRtForm'] = 'required|exists:rts,id';
         }
 
-        if ($this->hasRumah) {
-            $rules['rumahRtId'] = 'required|exists:rts,id';
-        }
+        // RT/RW rumah KK sudah divalidasi di selectedRtForm saat isKepalaKeluarga
 
         if ($this->hasRumahIndividu) {
             $rules['rumahIndividuRtId'] = 'required|exists:rts,id';

@@ -254,28 +254,6 @@
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-sm font-medium text-amber-800 mb-1.5">RW</label>
-                                <select wire:model.live="rumahRwId" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
-                                    <option value="">Pilih RW</option>
-                                    @foreach ($rwList as $rw)
-                                        <option value="{{ $rw->id }}">{{ $rw->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-amber-800 mb-1.5">RT</label>
-                                <select wire:model="rumahRtId" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all" {{ !$rumahRwId ? 'disabled' : '' }}>
-                                    <option value="">{{ $rumahRwId ? 'Pilih RT' : 'Pilih RW dulu' }}</option>
-                                    @foreach ($rumahRtList as $rt)
-                                        <option value="{{ $rt->id }}">{{ $rt->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('rumahRtId') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
                                 <label class="block text-sm font-medium text-amber-800 mb-1.5">Kategori Rumah</label>
                                 <select wire:model="kategoriRumah" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
                                     <option value="">Pilih Kategori</option>
