@@ -91,26 +91,28 @@
                     @if ($penduduk->kartuKeluarga)
                         <p class="text-sm font-mono text-gray-900">{{ $penduduk->kartuKeluarga->no_kk }}</p>
                         
-                        @if ($penduduk->kartuKeluarga->rt)
-                            <p class="text-sm text-gray-600 mt-1">
-                                <span class="font-medium">Lokasi:</span> 
-                                RT {{ $penduduk->kartuKeluarga->rt->nama }} / RW {{ $penduduk->kartuKeluarga->rt->rw->nama ?? '-' }}
-                            </p>
-                        @endif
-
-                        <div class="mt-2 flex items-center gap-2">
-                            <span class="text-sm text-gray-600 font-medium">Punya Rumah:</span>
-                            @if ($penduduk->kartuKeluarga->rumah)
-                                <span class="inline-flex items-center px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-medium rounded-md">
-                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Ya
-                                </span>
-                            @else
-                                <span class="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-600 border border-gray-200 text-xs font-medium rounded-md">
-                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                    Tidak
-                                </span>
+                        <div class="mt-3 pt-3 border-t border-gray-100 space-y-2">
+                            @if ($penduduk->kartuKeluarga->rt)
+                                <p class="text-sm text-gray-600">
+                                    <span class="font-medium">Lokasi:</span> 
+                                    RT {{ $penduduk->kartuKeluarga->rt->nama }} / RW {{ $penduduk->kartuKeluarga->rt->rw->nama ?? '-' }}
+                                </p>
                             @endif
+
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-600 font-medium">Punya Rumah:</span>
+                                @if ($penduduk->kartuKeluarga->rumah)
+                                    <span class="inline-flex items-center px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-medium rounded-md">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        Ya
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-600 border border-gray-200 text-xs font-medium rounded-md">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        Tidak
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     @else
                         <div class="flex items-center gap-2">
