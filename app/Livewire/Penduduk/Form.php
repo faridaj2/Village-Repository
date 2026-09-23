@@ -130,20 +130,26 @@ class Form extends Component
             }
 
             // Load rumah dari KK jika kepala keluarga
-            if ($this->isKepalaKeluarga && $this->penduduk->kartuKeluarga?->rumah_id) {
+            if ($this->isKepalaKeluarga && $this->penduduk->kartuKeluarga?->rumah) {
                 $rumah = $this->penduduk->kartuKeluarga->rumah;
-                $this->hasRumah = true;
-                if ($rumah->rt) {
-                    $this->rumahRwId = $rumah->rt->rw_id;
-                    $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
-                    $this->rumahRtId = $rumah->rt_id;
+                
+                // Hanya aktifkan toggle jika ada DETAIL rumah yang diisi (bukan cuma rt_id)
+                if ($rumah->kode_rumah || $rumah->kategori_rumah || $rumah->teraliri_listrik || $rumah->punya_mck) {
+                    $this->hasRumah = true;
+                    if ($rumah->rt) {
+                        $this->rumahRwId = $rumah->rt->rw_id;
+                        $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
+                        $this->rumahRtId = $rumah->rt_id;
+                    }
+                    $this->kodeRumah = $rumah->kode_rumah ?? '';
+                    $this->kategoriRumah = $rumah->kategori_rumah ?? '';
+                    $this->kategoriRtlh = $rumah->kategori_rtlh ?? '';
+                    $this->teraliriListrik = $rumah->teraliri_listrik ?? false;
+                    $this->punyaMckRumah = $rumah->punya_mck ?? false;
+                    $this->posisi = $rumah->posisi ?? '';
+                } else {
+                    $this->hasRumah = false; // Hanya ada RT/RW, biarkan toggle mati
                 }
-                $this->kodeRumah = $rumah->kode_rumah ?? '';
-                $this->kategoriRumah = $rumah->kategori_rumah ?? '';
-                $this->kategoriRtlh = $rumah->kategori_rtlh ?? '';
-                $this->teraliriListrik = $rumah->teraliri_listrik ?? false;
-                $this->punyaMckRumah = $rumah->punya_mck ?? false;
-                $this->posisi = $rumah->posisi ?? '';
             }
 
             // Load rumah individu
