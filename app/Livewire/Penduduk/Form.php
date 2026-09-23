@@ -120,11 +120,11 @@ class Form extends Component
                         $this->isKepalaKeluarga = true;
                         $this->no_kk_baru = $kk->no_kk;
                     }
-                    // Load RT/RW from KK's house
-                    if ($kk->rumah && $kk->rumah->rt) {
-                        $this->selectedRwForm = $kk->rumah->rt->rw_id;
+                    // Load RT/RW langsung dari Kartu Keluarga
+                    if ($kk->rt) {
+                        $this->selectedRwForm = $kk->rt->rw_id;
                         $this->rtListForm = Rt::where('rw_id', $this->selectedRwForm)->orderBy('nama')->get();
-                        $this->selectedRtForm = $kk->rumah->rt_id;
+                        $this->selectedRtForm = $kk->rt_id;
                     }
                 }
             }
@@ -311,41 +311,21 @@ class Form extends Component
             if ($this->penduduk && $this->penduduk->kartu_keluarga_id) {
                 // Edit: sudah punya KK, gunakan yang ada
                 $kkId = $this->penduduk->kartu_keluarga_id;
-                $kk = KartuKeluarga::with('rumah')->find($kkId); // Load relasi rumah
+                $kk = KartuKeluarga::find($kkId);
                 
                 if ($kk && $this->no_kk_baru && $kk->no_kk !== $this->no_kk_baru) {
                     $kk->update(['no_kk' => $this->no_kk_baru]);
                 }
                 
-                // Update RT/RW rumah KK - selalu jalankan jika selectedRtForm ada
+                // Update RT/RW langsung di Kartu Keluarga
                 if ($kk && $this->selectedRtForm) {
-                    if ($kk->rumah_id) {
-                        // Update rumah yang sudah ada
-                        $rumah = Rumah::find($kk->rumah_id);
-                        if ($rumah) {
-                            $rumah->update(['rt_id' => $this->selectedRtForm]);
-                        }
-                    } else {
-                        // Buat rumah baru jika belum ada
-                        $rumahBaru = Rumah::create([
-                            'rt_id' => $this->selectedRtForm,
-                            'alamat' => null,
-                            'posisi' => $this->posisi ?: null,
-                        ]);
-                        $kk->update(['rumah_id' => $rumahBaru->id]);
-                    }
+                    $kk->update(['rt_id' => $this->selectedRtForm]);
                 }
             } else {
                 // Create: buat KK baru
-                $rumahBaru = Rumah::create([
-                    'rt_id' => $this->selectedRtForm,
-                    'alamat' => null,
-                    'posisi' => $this->posisi ?: null,
-                ]);
-
                 $kk = KartuKeluarga::create([
                     'no_kk' => $this->no_kk_baru,
-                    'rumah_id' => $rumahBaru->id,
+                    'rt_id' => $this->selectedRtForm,
                     'alamat' => null,
                 ]);
                 $kkId = $kk->id;
@@ -371,7 +351,7 @@ class Form extends Component
             'status_kk' => $this->status_kk ?: null,
         ];
 
-        // Handle rumah KK (Hanya update detail rumah, TIDAK mengubah rt_id karena sudah dihandle di bagian KK)
+        // Handle rumah KK
         if ($this->hasRumah && $this->isKepalaKeluarga) {
             $rumahData = [
                 'kode_rumah' => $this->kodeRumah ?: null,
@@ -386,13 +366,14 @@ class Form extends Component
             if ($existingRumahId) {
                 Rumah::where('id', $existingRumahId)->update($rumahData);
             } else {
-                // Jika belum ada rumah tapi hasRumah dicentang, gunakan rt_id dari selectedRtForm
-                $rumahData['rt_id'] = $this->selectedRtForm;
                 $rumahBaru = Rumah::create($rumahData);
                 if ($kkId) {
                     KartuKeluarga::where('id', $kkId)->update(['rumah_id' => $rumahBaru->id]);
                 }
             }
+        } elseif (!$this->hasRumah && $this->isKepalaKeluarga && $this->penduduk?->kartuKeluarga?->rumah_id) {
+            // Hapus relasi rumah jika di-uncheck, agar tidak muncul di detail, tapi rt_id tetap ada di KK
+            KartuKeluarga::where('id', $this->penduduk->kartu_keluarga_id)->update(['rumah_id' => null]);
         }
 
         // Handle rumah individu

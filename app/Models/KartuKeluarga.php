@@ -15,6 +15,7 @@ class KartuKeluarga extends Model
         'no_kk',
         'kepala_keluarga_id',
         'rumah_id',
+        'rt_id',
         'alamat',
     ];
 
@@ -26,6 +27,11 @@ class KartuKeluarga extends Model
     public function rumah(): BelongsTo
     {
         return $this->belongsTo(Rumah::class);
+    }
+
+    public function rt(): BelongsTo
+    {
+        return $this->belongsTo(Rt::class);
     }
 
     public function anggota(): HasMany

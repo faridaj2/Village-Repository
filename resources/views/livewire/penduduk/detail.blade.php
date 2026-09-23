@@ -187,21 +187,22 @@
             <!-- Rumah KK -->
             <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Rumah dari KK</h3>
-                @if ($penduduk->kartuKeluarga?->rumah)
-                    @php $rumah = $penduduk->kartuKeluarga->rumah; @endphp
+                @if ($penduduk->kartuKeluarga && ($penduduk->kartuKeluarga->rt || $penduduk->kartuKeluarga->rumah))
                     <div class="space-y-3">
-                        @if ($rumah->kode_rumah)
-                            <div>
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kode Rumah</p>
-                                <p class="text-sm font-mono font-medium text-gray-900 mt-1">{{ $rumah->kode_rumah }}</p>
-                            </div>
-                        @endif
-                        @if ($rumah->rt)
+                        @if ($penduduk->kartuKeluarga->rt)
                             <div>
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Lokasi</p>
-                                <p class="text-sm text-gray-900 mt-1">RT {{ $rumah->rt->nama }} / RW {{ $rumah->rt->rw->nama ?? '-' }}</p>
+                                <p class="text-sm text-gray-900 mt-1">RT {{ $penduduk->kartuKeluarga->rt->nama }} / RW {{ $penduduk->kartuKeluarga->rt->rw->nama ?? '-' }}</p>
                             </div>
                         @endif
+                        @if ($penduduk->kartuKeluarga->rumah)
+                            @php $rumah = $penduduk->kartuKeluarga->rumah; @endphp
+                            @if ($rumah->kode_rumah)
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kode Rumah</p>
+                                    <p class="text-sm font-mono font-medium text-gray-900 mt-1">{{ $rumah->kode_rumah }}</p>
+                                </div>
+                            @endif
                         @if ($rumah->kategori_rumah)
                             <div>
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kategori</p>
@@ -229,23 +230,24 @@
                                 <span class="inline-flex items-center px-2.5 py-1 {{ $rtlhLabel[0] }} border text-xs font-medium rounded-lg mt-1">{{ $rtlhLabel[1] }}</span>
                             </div>
                         @endif
-                        <div>
-                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Fasilitas</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->teraliri_listrik ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
-                                    @if ($rumah->teraliri_listrik)
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    @endif
-                                    Listrik
-                                </span>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->punya_mck ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
-                                    @if ($rumah->punya_mck)
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    @endif
-                                    MCK
-                                </span>
+                            <div>
+                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Fasilitas</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->teraliri_listrik ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
+                                        @if ($rumah->teraliri_listrik)
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                        Listrik
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->punya_mck ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
+                                        @if ($rumah->punya_mck)
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                        MCK
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 @else
                     <p class="text-sm text-gray-500">Tidak memiliki rumah dari KK</p>
