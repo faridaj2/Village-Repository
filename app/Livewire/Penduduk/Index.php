@@ -60,7 +60,7 @@ class Index extends Component
     public function render()
     {
         $query = Penduduk::query()
-            ->with(['kartuKeluarga.rumah.rt.rw', 'rumah.rt.rw'])
+            ->with(['kartuKeluarga.rt.rw', 'rumah.rt.rw'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('nama', 'like', '%' . $this->search . '%')
@@ -75,13 +75,13 @@ class Index extends Component
             })
             ->when($this->filterRw, function ($query) {
                 $query->where(function ($q) {
-                    $q->whereHas('kartuKeluarga.rumah.rt', fn($q2) => $q2->where('rw_id', $this->filterRw))
+                    $q->whereHas('kartuKeluarga.rt', fn($q2) => $q2->where('rw_id', $this->filterRw))
                       ->orWhereHas('rumah.rt', fn($q2) => $q2->where('rw_id', $this->filterRw));
                 });
             })
             ->when($this->filterRt, function ($query) {
                 $query->where(function ($q) {
-                    $q->whereHas('kartuKeluarga.rumah', fn($q2) => $q2->where('rt_id', $this->filterRt))
+                    $q->whereHas('kartuKeluarga', fn($q2) => $q2->where('rt_id', $this->filterRt))
                       ->orWhereHas('rumah', fn($q2) => $q2->where('rt_id', $this->filterRt));
                 });
             })

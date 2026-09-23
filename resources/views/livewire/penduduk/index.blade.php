@@ -85,14 +85,14 @@
                             </td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">{{ $penduduk->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                             <td class="py-3.5 px-5 text-sm text-gray-600">
-                                @if ($penduduk->rumah?->rt)
+                                @if ($penduduk->kartuKeluarga?->rt)
+                                    <span class="font-medium">{{ $penduduk->kartuKeluarga->rt->rw->nama ?? '-' }}</span>
+                                    <span class="text-gray-400">/</span>
+                                    <span>{{ $penduduk->kartuKeluarga->rt->nama ?? '-' }}</span>
+                                @elseif ($penduduk->rumah?->rt)
                                     <span class="font-medium">{{ $penduduk->rumah->rt->rw->nama ?? '-' }}</span>
                                     <span class="text-gray-400">/</span>
                                     <span>{{ $penduduk->rumah->rt->nama ?? '-' }}</span>
-                                @elseif ($penduduk->kartuKeluarga?->rumah?->rt)
-                                    <span class="font-medium">{{ $penduduk->kartuKeluarga->rumah->rt->rw->nama ?? '-' }}</span>
-                                    <span class="text-gray-400">/</span>
-                                    <span>{{ $penduduk->kartuKeluarga->rumah->rt->nama ?? '-' }}</span>
                                 @else
                                     <span class="text-gray-400">-</span>
                                 @endif
