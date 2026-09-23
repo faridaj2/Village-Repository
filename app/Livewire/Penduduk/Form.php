@@ -367,11 +367,10 @@ class Form extends Component
             'status_kk' => $this->status_kk ?: null,
         ];
 
-        // Handle rumah KK
+        // Handle rumah KK (Hanya update detail rumah, TIDAK mengubah rt_id karena sudah dihandle di bagian KK)
         if ($this->hasRumah && $this->isKepalaKeluarga) {
             $rumahData = [
                 'kode_rumah' => $this->kodeRumah ?: null,
-                'rt_id' => $this->rumahRtId,
                 'kategori_rumah' => $this->kategoriRumah ?: null,
                 'kategori_rtlh' => $this->kategoriRtlh ?: null,
                 'teraliri_listrik' => $this->teraliriListrik,
@@ -383,13 +382,13 @@ class Form extends Component
             if ($existingRumahId) {
                 Rumah::where('id', $existingRumahId)->update($rumahData);
             } else {
+                // Jika belum ada rumah tapi hasRumah dicentang, gunakan rt_id dari selectedRtForm
+                $rumahData['rt_id'] = $this->selectedRtForm;
                 $rumahBaru = Rumah::create($rumahData);
                 if ($kkId) {
                     KartuKeluarga::where('id', $kkId)->update(['rumah_id' => $rumahBaru->id]);
                 }
             }
-        } elseif (!$this->hasRumah && $this->isKepalaKeluarga && $this->penduduk?->kartuKeluarga?->rumah_id) {
-            KartuKeluarga::where('id', $this->penduduk->kartu_keluarga_id)->update(['rumah_id' => null]);
         }
 
         // Handle rumah individu
