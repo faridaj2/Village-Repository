@@ -185,74 +185,64 @@
             </div>
 
             <!-- Rumah KK -->
+            @if ($penduduk->kartuKeluarga && $penduduk->kartuKeluarga->rumah)
             <div class="bg-white/70 backdrop-blur-xl border border-white/70 rounded-3xl shadow-xl shadow-slate-200/50 p-6">
                 <h3 class="text-base font-semibold text-gray-900 mb-4">Rumah dari KK</h3>
-                @if ($penduduk->kartuKeluarga && ($penduduk->kartuKeluarga->rt || $penduduk->kartuKeluarga->rumah))
-                    <div class="space-y-3">
-                        @if ($penduduk->kartuKeluarga->rt)
-                            <div>
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Lokasi</p>
-                                <p class="text-sm text-gray-900 mt-1">RT {{ $penduduk->kartuKeluarga->rt->nama }} / RW {{ $penduduk->kartuKeluarga->rt->rw->nama ?? '-' }}</p>
-                            </div>
-                        @endif
-                        @if ($penduduk->kartuKeluarga->rumah)
-                            @php $rumah = $penduduk->kartuKeluarga->rumah; @endphp
-                            @if ($rumah->kode_rumah)
-                                <div>
-                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kode Rumah</p>
-                                    <p class="text-sm font-mono font-medium text-gray-900 mt-1">{{ $rumah->kode_rumah }}</p>
-                                </div>
-                            @endif
-                        @if ($rumah->kategori_rumah)
-                            <div>
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kategori</p>
-                                @php
-                                    $katLabel = match($rumah->kategori_rumah) {
-                                        'permanen' => ['bg-emerald-50 text-emerald-700 border-emerald-200', 'Permanen'],
-                                        'semi_permanen' => ['bg-amber-50 text-amber-700 border-amber-200', 'Semi Permanen'],
-                                        'darurat' => ['bg-red-50 text-red-700 border-red-200', 'Darurat'],
-                                        default => ['bg-gray-50 text-gray-600 border-gray-200', '-'],
-                                    };
-                                @endphp
-                                <span class="inline-flex items-center px-2.5 py-1 {{ $katLabel[0] }} border text-xs font-medium rounded-lg mt-1">{{ $katLabel[1] }}</span>
-                            </div>
-                        @endif
-                        @if ($rumah->kategori_rtlh)
-                            <div>
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">RTLH</p>
-                                @php
-                                    $rtlhLabel = match($rumah->kategori_rtlh) {
-                                        'layak' => ['bg-emerald-50 text-emerald-700 border-emerald-200', 'Layak Huni'],
-                                        'tidak_layak' => ['bg-red-50 text-red-700 border-red-200', 'Tidak Layak Huni'],
-                                        default => ['bg-gray-50 text-gray-600 border-gray-200', '-'],
-                                    };
-                                @endphp
-                                <span class="inline-flex items-center px-2.5 py-1 {{ $rtlhLabel[0] }} border text-xs font-medium rounded-lg mt-1">{{ $rtlhLabel[1] }}</span>
-                            </div>
-                        @endif
-                            <div>
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Fasilitas</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->teraliri_listrik ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
-                                        @if ($rumah->teraliri_listrik)
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        @endif
-                                        Listrik
-                                    </span>
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->punya_mck ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
-                                        @if ($rumah->punya_mck)
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        @endif
-                                        MCK
-                                    </span>
-                                </div>
-                            </div>
-                        @endif
+                <div class="space-y-3">
+                    @php $rumah = $penduduk->kartuKeluarga->rumah; @endphp
+                    @if ($rumah->kode_rumah)
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kode Rumah</p>
+                            <p class="text-sm font-mono font-medium text-gray-900 mt-1">{{ $rumah->kode_rumah }}</p>
+                        </div>
+                    @endif
+                    @if ($rumah->kategori_rumah)
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kategori</p>
+                            @php
+                                $katLabel = match($rumah->kategori_rumah) {
+                                    'permanen' => ['bg-emerald-50 text-emerald-700 border-emerald-200', 'Permanen'],
+                                    'semi_permanen' => ['bg-amber-50 text-amber-700 border-amber-200', 'Semi Permanen'],
+                                    'darurat' => ['bg-red-50 text-red-700 border-red-200', 'Darurat'],
+                                    default => ['bg-gray-50 text-gray-600 border-gray-200', '-'],
+                                };
+                            @endphp
+                            <span class="inline-flex items-center px-2.5 py-1 {{ $katLabel[0] }} border text-xs font-medium rounded-lg mt-1">{{ $katLabel[1] }}</span>
+                        </div>
+                    @endif
+                    @if ($rumah->kategori_rtlh)
+                        <div>
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">RTLH</p>
+                            @php
+                                $rtlhLabel = match($rumah->kategori_rtlh) {
+                                    'layak' => ['bg-emerald-50 text-emerald-700 border-emerald-200', 'Layak Huni'],
+                                    'tidak_layak' => ['bg-red-50 text-red-700 border-red-200', 'Tidak Layak Huni'],
+                                    default => ['bg-gray-50 text-gray-600 border-gray-200', '-'],
+                                };
+                            @endphp
+                            <span class="inline-flex items-center px-2.5 py-1 {{ $rtlhLabel[0] }} border text-xs font-medium rounded-lg mt-1">{{ $rtlhLabel[1] }}</span>
+                        </div>
+                    @endif
+                    <div>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Fasilitas</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->teraliri_listrik ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
+                                @if ($rumah->teraliri_listrik)
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                @endif
+                                Listrik
+                            </span>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg {{ $rumah->punya_mck ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-500 border border-gray-200' }}">
+                                @if ($rumah->punya_mck)
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                @endif
+                                MCK
+                            </span>
+                        </div>
                     </div>
-                @else
-                    <p class="text-sm text-gray-500">Tidak memiliki rumah dari KK</p>
-                @endif
+                </div>
             </div>
+            @endif
 
             <a href="{{ route('penduduk.edit', $penduduk) }}" class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium rounded-xl hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
