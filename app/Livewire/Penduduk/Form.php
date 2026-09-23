@@ -173,6 +173,20 @@ class Form extends Component
         } else {
             $this->rtListForm = [];
         }
+        
+        // Sinkronkan dengan Rumah KK jika Kepala Keluarga
+        if ($this->isKepalaKeluarga && $this->hasRumah) {
+            $this->rumahRwId = $this->selectedRwForm;
+            $this->updatedRumahRwId();
+        }
+    }
+
+    public function updatedSelectedRtForm()
+    {
+        // Sinkronkan dengan Rumah KK jika Kepala Keluarga
+        if ($this->isKepalaKeluarga && $this->hasRumah) {
+            $this->rumahRtId = $this->selectedRtForm;
+        }
     }
 
     public function updatedRumahRwId()
@@ -182,6 +196,20 @@ class Form extends Component
             $this->rumahRtList = Rt::where('rw_id', $this->rumahRwId)->orderBy('nama')->get();
         } else {
             $this->rumahRtList = [];
+        }
+        
+        // Sinkronkan dengan Form KK jika Kepala Keluarga
+        if ($this->isKepalaKeluarga) {
+            $this->selectedRwForm = $this->rumahRwId;
+            $this->updatedSelectedRwForm();
+        }
+    }
+
+    public function updatedRumahRtId()
+    {
+        // Sinkronkan dengan Form KK jika Kepala Keluarga
+        if ($this->isKepalaKeluarga) {
+            $this->selectedRtForm = $this->rumahRtId;
         }
     }
 
@@ -279,16 +307,22 @@ class Form extends Component
             if ($this->penduduk && $this->penduduk->kartu_keluarga_id) {
                 // Edit: sudah punya KK, gunakan yang ada
                 $kkId = $this->penduduk->kartu_keluarga_id;
-                $kk = $this->penduduk->kartuKeluarga;
+                $kk = KartuKeluarga::with('rumah')->find($kkId); // Load relasi rumah
+                
                 if ($kk && $this->no_kk_baru && $kk->no_kk !== $this->no_kk_baru) {
                     $kk->update(['no_kk' => $this->no_kk_baru]);
                 }
                 
-                // Update RT/RW rumah KK
+                // Update RT/RW rumah KK - selalu jalankan jika selectedRtForm ada
                 if ($kk && $this->selectedRtForm) {
                     if ($kk->rumah_id) {
-                        Rumah::where('id', $kk->rumah_id)->update(['rt_id' => $this->selectedRtForm]);
+                        // Update rumah yang sudah ada
+                        $rumah = Rumah::find($kk->rumah_id);
+                        if ($rumah) {
+                            $rumah->update(['rt_id' => $this->selectedRtForm]);
+                        }
                     } else {
+                        // Buat rumah baru jika belum ada
                         $rumahBaru = Rumah::create([
                             'rt_id' => $this->selectedRtForm,
                             'alamat' => null,
