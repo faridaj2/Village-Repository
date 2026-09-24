@@ -288,6 +288,9 @@ class Form extends Component
             $this->selectedRwForm = '';
             $this->selectedRtForm = '';
             $this->rtListForm = [];
+
+            // Reset juga toggle Punya Rumah karena section-nya hanya untuk KK
+            $this->hasRumah = false;
         }
     }
 

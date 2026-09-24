@@ -99,7 +99,7 @@
                             </td>
                             <td class="py-3.5 px-5">
                                 @if ($penduduk->kartuKeluarga)
-                                    <span class="text-sm text-gray-600">{{ $penduduk->kartuKeluarga->no_kk }}</span>
+                                    <span class="text-sm font-mono text-gray-700">{{ $penduduk->kartuKeluarga->no_kk }}</span>
                                 @else
                                     <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-lg">Tanpa KK</span>
                                 @endif
