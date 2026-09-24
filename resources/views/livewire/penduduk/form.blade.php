@@ -1,4 +1,4 @@
-﻿<div>
+<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('penduduk.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100">
@@ -127,7 +127,7 @@
                 <div class="mb-5">
                     <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="relative">
-                            <input type="checkbox" wire:model.live="isKepalaKeluarga" wire:key="toggle-kk-{{ $penduduk?->id ?? 'new' }}" class="sr-only peer">
+                            <input type="checkbox" wire:model.live="isKepalaKeluarga" wire:key="toggle-kk-{{ $penduduk?->id ?? 'new' }}" @checked($isKepalaKeluarga) class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-indigo-500 transition-colors"></div>
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>
@@ -140,7 +140,7 @@
 
                 <!-- Jika Kepala Keluarga: Input No KK Baru + RT/RW -->
                 @if ($isKepalaKeluarga)
-                    <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-xl space-y-4">
+                    <div wire:key="kk-baru-panel" class="p-4 bg-indigo-50 border border-indigo-100 rounded-xl space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-indigo-800 mb-1.5">No. Kartu Keluarga Baru</label>
                             <input wire:model="no_kk_baru" type="text" placeholder="Masukkan 16 digit No. KK" maxlength="16" class="w-full px-4 py-2.5 bg-white border border-indigo-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 transition-all">
@@ -171,7 +171,7 @@
                     </div>
                 @else
                     <!-- Jika Bukan KK: Search KK yang ada -->
-                    <div class="relative">
+                    <div wire:key="kk-cari-panel" class="relative">
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">Cari Kartu Keluarga</label>
                         <div class="relative">
                             <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -185,7 +185,7 @@
 
                         <!-- Dropdown hasil pencarian -->
                         @if ($showKkDropdown && count($kkResults) > 0)
-                            <div class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                            <div wire:key="kk-dropdown" class="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-48 overflow-y-auto">
                                 @foreach ($kkResults as $kk)
                                     <button type="button" wire:click="selectKk({{ $kk->id }}, '{{ $kk->no_kk }}')" class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0">
                                         <div>
@@ -228,26 +228,26 @@
                     <div class="w-6 h-6 bg-amber-100 rounded-md flex items-center justify-center">
                         <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                     </div>
-                    Rumah yang terhubung KK
+                    Punya Rumah
                 </h3>
 
                 <!-- Toggle Punya Rumah -->
                 <div class="mb-5">
                     <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="relative">
-                            <input type="checkbox" wire:model.live="hasRumah" wire:key="toggle-rumah-{{ $penduduk?->id ?? 'new' }}" class="sr-only peer">
+                            <input type="checkbox" wire:model.live="hasRumah" wire:key="toggle-rumah-{{ $penduduk?->id ?? 'new' }}" @checked($hasRumah) class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-amber-500 transition-colors"></div>
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>
                         <div>
-                            <span class="text-sm font-medium text-gray-900">Punya Rumah KK</span>
-                            <p class="text-xs text-gray-500">Centang jika ingin mengisi detail rumah (RT/RW tetap di bagian Kartu Keluarga)</p>
+                            <span class="text-sm font-medium text-gray-900">Punya Rumah</span>
+                            <p class="text-xs text-gray-500">Centang jika ingin mengisi detail rumah KK (RT/RW tetap di bagian Kartu Keluarga)</p>
                         </div>
                     </label>
                 </div>
 
                 @if ($hasRumah)
-                    <div class="p-4 bg-amber-50 border border-amber-100 rounded-xl space-y-4">
+                    <div wire:key="rumah-kk-panel" class="p-4 bg-amber-50 border border-amber-100 rounded-xl space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-amber-800 mb-1.5">Kode Rumah</label>
                             <input wire:model="kodeRumah" type="text" placeholder="Contoh: R001" class="w-full px-4 py-2.5 bg-white border border-amber-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 transition-all">
@@ -311,7 +311,7 @@
                 <div class="mb-5">
                     <label class="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
                         <div class="relative">
-                            <input type="checkbox" wire:model.live="hasRumahIndividu" class="sr-only peer">
+                            <input type="checkbox" wire:model.live="hasRumahIndividu" wire:key="toggle-rumah-individu-{{ $penduduk?->id ?? 'new' }}" @checked($hasRumahIndividu) class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-colors"></div>
                             <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform"></div>
                         </div>
@@ -323,7 +323,7 @@
                 </div>
 
                 @if ($hasRumahIndividu)
-                    <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl space-y-4">
+                    <div wire:key="rumah-individu-panel" class="p-4 bg-blue-50 border border-blue-100 rounded-xl space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-blue-800 mb-1.5">Kode Rumah</label>
                             <input wire:model="kodeRumahIndividu" type="text" placeholder="Contoh: R001" class="w-full px-4 py-2.5 bg-white border border-blue-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 transition-all">

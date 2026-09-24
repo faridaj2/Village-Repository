@@ -1,4 +1,4 @@
-﻿<div>
+<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('rumah.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 transition-colors">

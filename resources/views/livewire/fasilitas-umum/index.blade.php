@@ -1,4 +1,4 @@
-﻿<div>
+<div>
     <x-slot name="header">
         <div>
             <h2 class="text-xl font-bold text-gray-900">Fasilitas Umum</h2>

@@ -1,4 +1,4 @@
-﻿<div>
+<div>
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('kartu-keluarga.index') }}" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></a>

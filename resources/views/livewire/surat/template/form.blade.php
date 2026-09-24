@@ -1,4 +1,4 @@
-﻿    <div x-data="{
+    <div x-data="{
         previewHtml: @js($body_html ?? ''),
         copied: '',
         showPreview: false,

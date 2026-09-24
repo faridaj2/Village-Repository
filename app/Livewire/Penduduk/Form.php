@@ -180,17 +180,18 @@ class Form extends Component
             $this->rtListForm = [];
         }
         
-        // Sinkronkan dengan Rumah KK jika Kepala Keluarga
-        if ($this->isKepalaKeluarga && $this->hasRumah) {
+        // Sinkronkan dengan Rumah KK (satu arah + guard, tanpa memanggil updater lain)
+        if ($this->isKepalaKeluarga && $this->hasRumah && $this->rumahRwId !== $this->selectedRwForm) {
             $this->rumahRwId = $this->selectedRwForm;
-            $this->updatedRumahRwId();
+            $this->rumahRtId = '';
+            $this->rumahRtList = $this->rtListForm;
         }
     }
 
     public function updatedSelectedRtForm()
     {
-        // Sinkronkan dengan Rumah KK jika Kepala Keluarga
-        if ($this->isKepalaKeluarga && $this->hasRumah) {
+        // Sinkronkan dengan Rumah KK (satu arah + guard)
+        if ($this->isKepalaKeluarga && $this->rumahRtId !== $this->selectedRtForm) {
             $this->rumahRtId = $this->selectedRtForm;
         }
     }
@@ -203,11 +204,12 @@ class Form extends Component
         } else {
             $this->rumahRtList = [];
         }
-        
-        // Sinkronkan dengan Form KK jika Kepala Keluarga
-        if ($this->isKepalaKeluarga) {
+
+        // Sinkronkan dengan Form KK (satu arah + guard, tanpa memanggil updater lain)
+        if ($this->isKepalaKeluarga && $this->selectedRwForm !== $this->rumahRwId) {
             $this->selectedRwForm = $this->rumahRwId;
-            $this->updatedSelectedRwForm();
+            $this->selectedRtForm = '';
+            $this->rtListForm = $this->rumahRtList;
         }
     }
 
